@@ -4,6 +4,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return "Hello World hi QB mentee matching!"
+    return "Hello World this is a new version"
 
 
