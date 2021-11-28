@@ -1,0 +1,307 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Mentor Survey
+{% endblock %}
+
+{% block main %}
+<h3>Terms and Conditions</h3>
+<form action="/mentorsurvey" method="post">
+    <div class="mb-3">
+        <p> As a mentor, I agree to fully respect the boundaries I personally establish with my mentee. 
+            I will establish these boundaries with a mutual consensus. This includes but is not limited to: 
+            respecting the methods of communication we mutually agree to at the beginning of our professional relationship, 
+            respecting the time frame of communication established at the beginning of our professional relationship, 
+            respecting my mentee's right to privacy and autonomy on their social media platforms, and respecting my mentee's 
+            right to cancel or reschedule any form of mentorship including virtual meetings, phone calls and virtual communication. </p>
+        <label for="cars">Choose answer:</label>
+        <select name="cars" id="cars">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">I agree to this condition.</option>
+            <option value="0">I disagree to this condition.</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <p> As a mentor, I agree to guiding my mentee through all application sections in a timely manner. 
+            If I cannot finish these, I will clearly communicate this to my mentee. I will follow my own or 
+            suggested timeframe, come prepared to every meeting and I will respectfully provide my mentee with 
+            positive constructive criticism. </p>
+        <label for="cars">Choose answer:</label>
+        <select name="cars" id="cars">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">I agree to this condition.</option>
+            <option value="0">I disagree to this condition.</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <p> As a mentee, I agree to demonstrate appropriate behavior in all of my interactions with my mentor. 
+            This includes and is not limited to: refraining from making uncomfortable comments on appearance, 
+            refraining from engaging in any form of discriminatory conversation towards a certain demographic, 
+            and refraining from beginning any form of romantic or sexual relationship with my mentor. </p>
+        <label for="cars">Choose answer:</label>
+        <select name="cars" id="cars">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">I agree to this condition.</option>
+            <option value="0">I disagree to this condition.</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <p> As a mentor, I agree to demonstrate appropriate behavior in all of my interactions with my mentor. 
+            This includes and is not limited to: refraining from making uncomfortable comments on appearance, 
+            refraining from engaging in any form of discriminatory conversation towards a certain demographic, 
+            and refraining from beginning any form of romantic or sexual relationship with my mentor. </p>
+        <label for="cars">Choose answer:</label>
+        <select name="cars" id="cars">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">I agree to this condition.</option>
+            <option value="0">I disagree to this condition.</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <p> As a mentor, I agree to any other conditions established by my mentee. By clicking, "I agree to this condition," 
+            I am indicating I am fully aware of the conditions in my mentorship, acknowledging the consequences of violating 
+            any condition and understanding that I am able to lose this mentorship at any time, given I engage in any inappropriate 
+            behavior. </p>
+        <label for="cars">Choose answer:</label>
+        <select name="cars" id="cars">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">I agree to this condition.</option>
+            <option value="0">I disagree to this condition.</option>
+        </select>
+    </div>
+</form>
+<h3>Identity</h3>
+<form action="/mentorsurvey" method="post">
+    <p>Check off the race(s)/ethnicity/(ies) you identify with:</p>
+    <div class="mb-3">
+        <input type="checkbox" id="africanamerican" name="africanamerican">
+        <label for="africanamerican">Black or African American</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="asian" name="asian">
+        <label for="asian">Asian</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="native" name="native">
+        <label for="native">American Indian/ Alaskan Native/ Native Indian</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="pacificislander" name="pacificislander">
+        <label for="pacificislander">Pacific Islander</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="white" name="white">
+        <label for="white">White/ European</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="latinx" name="latinx">
+        <label for="latinx">Latinx</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="n/a" name="n/a">
+        <label for="n/a">None of the above/ Prefer not to answer</label>
+    </div>
+</form>
+<form action="/mentorsurvey" method="post">
+    <p>Check off the spirituality/(ies) you identify with:</p>
+    <div class="mb-3">
+        <input type="checkbox" id="muslim" name="muslim">
+        <label for="muslim">Muslim</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="jewish" name="jewish">
+        <label for="jewish">Jewish</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="christian" name="christian">
+        <label for="christian">Christian</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="hindu" name="hindu">
+        <label for="hindu">Hindu</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="buddhist" name="buddhist">
+        <label for="buddhist">Busshist</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="n/a" name="n/a">
+        <label for="n/a">None of the above/ Prefer not to answer</label>
+    </div>
+</form>
+<form action="/mentorsurvey" method="post">
+    <p>Check off the gender(s) you identify with:</p>
+    <div class="mb-3">
+        <input type="checkbox" id="woman" name="woman">
+        <label for="woman">Woman</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="man" name="man">
+        <label for="man">Man</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="transf" name="tansf">
+        <label for="transf">Transfemme</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="transm" name="transm">
+        <label for="transm">Transmasc</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="nonbinary" name="nonbinary">
+        <label for="nonbinary">Non-Binary</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="n/a" name="n/a">
+        <label for="n/a">None of the above/ Prefer not to answer</label>
+    </div>
+</form>
+<form action="/mentorsurvey" method="post">
+    <p>Check off your citizenship status:</p>
+    <div class="mb-3">
+        <input type="checkbox" id="international" name="international">
+        <label for="international">International Student studying in the U.S.</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="domestic" name="domestic">
+        <label for="domestic">Domestic Undocumented Student</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="citizen" name="citizen">
+        <label for="citizen">U.S. Citizen</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="n/a" name="n/a">
+        <label for="n/a">None of the above/ Prefer not to answer</label>
+    </div>
+</form>
+<h3>Academic Interests</h3>
+<form action="/mentorsurvey" method="post">
+    <p>Check off the options that best describe your current academic path:</p>
+    <div class="mb-3">
+        <input type="checkbox" id="sciences" name="sciences">
+        <label for="sciences">Life/Physical Sciences: Biology, Physics, Chemistry, Astronomy, etc.</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="engineering" name="engineering">
+        <label for="engineering">Engineering: Chemical, Mechanical, Electrical, etc.</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="socials" name="socials">
+        <label for="socials">Social Sciences: Pre-Law, Economics, History, Psychology, etc.</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="arts" name="arts">
+        <label for="arts">Arts: Music, Dancing, Theater, Film, Architecture, etc.</label>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="business" name="business">
+        <label for="business">Business: Management, Accounting, Finance, etc.</label>
+    </div>
+</form>
+<form action="/mentorsurvey" method="post">
+    <label for="currentschool">Your current school: </label>
+    <input name="currentschool" type="text">
+</form>
+<h3>Rankings</h3>
+<form action="/mentorsurvey" method="post">
+    <p>Rank the importance of having a mentor that matches the following criteria: (on a scale of 1-5):</p>
+    <div class="mb-3">
+        <label for="academicrank">Academic Interest: </label>
+            <select name="academicrank" id="academicrank">
+                <option disabled selected value> -- select an option -- </option>
+                <option value="1">1: I need this in a mentor.</option>
+                <option value="2">2: I really want this in a mentor.</option>
+                <option value="3">3: I would like this in a mentor.</option>
+                <option value="4">4: I might want this in a mentor.</option>
+                <option value="5">5: I don't have a preference.</option>
+            </select>
+    </div>
+    <div class="mb-3">
+        <label for="genderrank">Gender Identity: </label>
+        <select name="genderrank" id="genderrank">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">1: I need this in a mentor.</option>
+            <option value="2">2: I really want this in a mentor.</option>
+            <option value="3">3: I would like this in a mentor.</option>
+            <option value="4">4: I might want this in a mentor.</option>
+            <option value="5">5: I don't have a preference.</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="religiousrank">Religious Affiliation: </label>
+        <select name="religiousrank" id="religiousrank">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">1: I need this in a mentor.</option>
+            <option value="2">2: I really want this in a mentor.</option>
+            <option value="3">3: I would like this in a mentor.</option>
+            <option value="4">4: I might want this in a mentor.</option>
+            <option value="5">5: I don't have a preference.</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="racerank">Race/ Ethnic Identity: </label>
+        <select name="racerank" id="racerank">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">1: I need this in a mentor.</option>
+            <option value="2">2: I really want this in a mentor.</option>
+            <option value="3">3: I would like this in a mentor.</option>
+            <option value="4">4: I might want this in a mentor.</option>
+            <option value="5">5: I don't have a preference.</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="citizenshiprank">Citizenship Status: </label>
+        <select name="citizenshiprank" id="citizenshiprank">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">1: I need this in a mentor.</option>
+            <option value="2">2: I really want this in a mentor.</option>
+            <option value="3">3: I would like this in a mentor.</option>
+            <option value="4">4: I might want this in a mentor.</option>
+            <option value="5">5: I don't have a preference.</option>
+        </select>
+    </div>
+</form>
+<h3>Logistics</h3>
+<form>
+    <p>Check off your timezone:</p>
+    <div class="mb-3">
+        <label for="timezome">Timezone</label>
+        <select name="timezone" id="timezone">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">1: I need this in a mentor.</option>
+            <option value="2">2: I really want this in a mentor.</option>
+            <option value="3">3: I would like this in a mentor.</option>
+            <option value="4">4: I might want this in a mentor.</option>
+            <option value="5">5: I don't have a preference.</option>
+        </select>
+    </div>
+</form>
+<h3>QB Schools</h3>
+<form action="/mentorsurvey" method="post">
+    <div class="mb-3">
+        <p> Select all QB schools you've been accepted to: </p>
+        <select multiple name="school1">
+            <option disabled selected value=""></option>
+            {% for school in schools %}
+                <option value="{{ school }}">{{ school }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</form>
+<h3>Mentees</h3>
+<form action="/mentorsurvey" method="post">
+    <div class="mb-3">
+        <p> Choose how many mentees you are willing to take (max 5): </p>
+        <label for="menteecount">Number of Mentees: </label>
+        <select name="menteecount" id="menteecount">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+</form>
+{% endblock %}
