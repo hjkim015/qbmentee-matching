@@ -14,7 +14,7 @@ schools = ["Amherst College", "Barnard College", "Boston College", "Boston Unive
 
 @app.route('/')
 def hello():
-    return "Hello World this is a new version"
+    return render_template("layout.html")
 
 @app.route('/menteeresgistration', methods=["GET", "POST"])
 def hello():
