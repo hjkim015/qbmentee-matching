@@ -1,4 +1,6 @@
 from flask import Flask, redirect, render_template, request, session
+# import jinja2
+import os
 
 app = Flask(__name__)
 
@@ -12,23 +14,42 @@ schools = ["Amherst College", "Barnard College", "Boston College", "Boston Unive
 "University of Virginia","Vanderbilt University","Vassar College","Washington and Lee University","Washington University in St. Louis",
 "Wellesley College","Wesleyan University","Williams College","Yale University"]
 
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 @app.route('/')
 def hello():
-    return render_template("layout.html")
+    return render_template("home.html")
 
-@app.route('/menteeresgistration', methods=["GET", "POST"])
-def hello():
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    """log in the user"""
+    ##If the method is post, then go to the dashboard of mentor or mentee
     if request.method == "GET":
-        return render_template("menteeregistration.html")
+        return render_template("login.html")
+
+##MENTEE-FACING 
+@app.route('/menteeRegistration', methods=["GET", "POST"])
+def registerMentee():
+    """Register a mentee"""
+    if request.method == "GET":
+        return render_template("menteeRegistration.html")
 
 #making sure to pass on the list of schools to the html for the mentees and mentors surveys
-@app.route('/menteesurvey', methods=["GET", "POST"])
-def hello():
+@app.route('/menteeSurvey', methods=["GET", "POST"])
+def surveyMentee():
+    """Register a Mentor"""
     if request.method == "GET":
-        return render_template("menteesurvey.html", schools=schools)
+        return render_template("menteeSurvey.html", schools=schools)
 
-@app.route('/mentorsurvey', methods=["GET", "POST"])
-def hello():
+
+##MENTOR FACING FUNCTIONS
+@app.route('/mentorRegistration', methods=["GET", "POST"])
+def registerMentor():
     if request.method == "GET":
-        return render_template("mentorsurvey.html", schools=schools)
+        return render_template("mentorRegistration.html")
+
+@app.route('/mentorSurvey', methods=["GET", "POST"])
+def surveyMentor():
+    if request.method == "GET":
+        return render_template("mentorSurvey.html", schools=schools)
 

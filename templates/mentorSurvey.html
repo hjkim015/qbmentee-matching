@@ -1,18 +1,19 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Mentee Survey
+    Mentor Survey
 {% endblock %}
 
 {% block main %}
 <h3>Terms and Conditions</h3>
-<form action="/menteesurvey" method="post">
+<form action="/mentorSurvey" method="post">
     <div class="mb-3">
-        <p> The following are necessary conditions of agreement to move forth with mentorship. 
-            We highly value the privacy and mental health of our mentors and mentees. 
-            In order to make this possible, we must take the proper precautions to fully protect both mentors and mentees. 
-            If these conditions of agreement are broken at any point, mentorship will be terminated immediately and external consequences will be taken if necessary. 
-            If you do not agree to all of these conditions of agreement, you put your mentorship at possible risk of rejection. </p>
+        <p> As a mentor, I agree to fully respect the boundaries I personally establish with my mentee. 
+            I will establish these boundaries with a mutual consensus. This includes but is not limited to: 
+            respecting the methods of communication we mutually agree to at the beginning of our professional relationship, 
+            respecting the time frame of communication established at the beginning of our professional relationship, 
+            respecting my mentee's right to privacy and autonomy on their social media platforms, and respecting my mentee's 
+            right to cancel or reschedule any form of mentorship including virtual meetings, phone calls and virtual communication. </p>
         <label for="cars">Choose answer:</label>
         <select name="cars" id="cars">
             <option disabled selected value> -- select an option -- </option>
@@ -21,11 +22,10 @@
         </select>
     </div>
     <div class="mb-3">
-        <p> As a mentee, I agree to completing all of the application portions assigned by my mentor in a timely manner. 
-            If I cannot finish these, I will clearly communicate this to my mentor. 
-            I will follow my mentor's timeframe, come prepared to every meeting and while I am not required to take 
-            all of my mentor's advice, I will respect the wisdom they offer and not attempt to argue with them unless 
-            I believe they are presenting an offensive opinion. </p>
+        <p> As a mentor, I agree to guiding my mentee through all application sections in a timely manner. 
+            If I cannot finish these, I will clearly communicate this to my mentee. I will follow my own or 
+            suggested timeframe, come prepared to every meeting and I will respectfully provide my mentee with 
+            positive constructive criticism. </p>
         <label for="cars">Choose answer:</label>
         <select name="cars" id="cars">
             <option disabled selected value> -- select an option -- </option>
@@ -46,10 +46,22 @@
         </select>
     </div>
     <div class="mb-3">
-        <p> As a mentee, I agree to any other conditions established by my mentor. 
-            By clicking, "I agree to this condition," I am indicating I am fully aware of the conditions in my mentorship, 
-            acknowledging the consequences of violating any condition and understanding that I am able to lose this mentorship 
-            at any time, given I engage in any inappropriate behavior. </p>
+        <p> As a mentor, I agree to demonstrate appropriate behavior in all of my interactions with my mentor. 
+            This includes and is not limited to: refraining from making uncomfortable comments on appearance, 
+            refraining from engaging in any form of discriminatory conversation towards a certain demographic, 
+            and refraining from beginning any form of romantic or sexual relationship with my mentor. </p>
+        <label for="cars">Choose answer:</label>
+        <select name="cars" id="cars">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">I agree to this condition.</option>
+            <option value="0">I disagree to this condition.</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <p> As a mentor, I agree to any other conditions established by my mentee. By clicking, "I agree to this condition," 
+            I am indicating I am fully aware of the conditions in my mentorship, acknowledging the consequences of violating 
+            any condition and understanding that I am able to lose this mentorship at any time, given I engage in any inappropriate 
+            behavior. </p>
         <label for="cars">Choose answer:</label>
         <select name="cars" id="cars">
             <option disabled selected value> -- select an option -- </option>
@@ -59,7 +71,7 @@
     </div>
 </form>
 <h3>Identity</h3>
-<form action="/menteesurvey" method="post">
+<form action="/mentorsurvey" method="post">
     <p>Check off the race(s)/ethnicity/(ies) you identify with:</p>
     <div class="mb-3">
         <input type="checkbox" id="africanamerican" name="africanamerican">
@@ -90,7 +102,7 @@
         <label for="n/a">None of the above/ Prefer not to answer</label>
     </div>
 </form>
-<form action="/menteesurvey" method="post">
+<form action="/mentorsurvey" method="post">
     <p>Check off the spirituality/(ies) you identify with:</p>
     <div class="mb-3">
         <input type="checkbox" id="muslim" name="muslim">
@@ -117,7 +129,7 @@
         <label for="n/a">None of the above/ Prefer not to answer</label>
     </div>
 </form>
-<form action="/menteesurvey" method="post">
+<form action="/mentorsurvey" method="post">
     <p>Check off the gender(s) you identify with:</p>
     <div class="mb-3">
         <input type="checkbox" id="woman" name="woman">
@@ -144,7 +156,7 @@
         <label for="n/a">None of the above/ Prefer not to answer</label>
     </div>
 </form>
-<form action="/menteesurvey" method="post">
+<form action="/mentorsurvey" method="post">
     <p>Check off your citizenship status:</p>
     <div class="mb-3">
         <input type="checkbox" id="international" name="international">
@@ -164,8 +176,8 @@
     </div>
 </form>
 <h3>Academic Interests</h3>
-<form action="/menteesurvey" method="post">
-    <p>Check off the major path(s) that best describe your interests:</p>
+<form action="/mentorsurvey" method="post">
+    <p>Check off the options that best describe your current academic path:</p>
     <div class="mb-3">
         <input type="checkbox" id="sciences" name="sciences">
         <label for="sciences">Life/Physical Sciences: Biology, Physics, Chemistry, Astronomy, etc.</label>
@@ -187,8 +199,12 @@
         <label for="business">Business: Management, Accounting, Finance, etc.</label>
     </div>
 </form>
+<form action="/mentorsurvey" method="post">
+    <label for="currentschool">Your current school: </label>
+    <input name="currentschool" type="text">
+</form>
 <h3>Rankings</h3>
-<form action="/menteesurvey" method="post">
+<form action="/mentorsurvey" method="post">
     <p>Rank the importance of having a mentor that matches the following criteria: (on a scale of 1-5):</p>
     <div class="mb-3">
         <label for="academicrank">Academic Interest: </label>
@@ -247,7 +263,7 @@
     </div>
 </form>
 <h3>Logistics</h3>
-<form action="/menteesurvey" method="post">
+<form>
     <p>Check off your timezone:</p>
     <div class="mb-3">
         <label for="timezome">Timezone</label>
@@ -262,26 +278,30 @@
     </div>
 </form>
 <h3>QB Schools</h3>
-<form action="/menteeregistration" method="post">
+<form action="/mentorsurvey" method="post">
     <div class="mb-3">
-        <p> Select up to three (3) QB schools: </p>
-        <select name="school1">
-            <option disabled selected value=""></option>
-            {% for school in schools %}
-                <option value="{{ school }}">{{ school }}</option>
-            {% endfor %}
-        </select>
-        <select name="school2">
-            <option disabled selected value=""></option>
-            {% for school in schools %}
-                <option value="{{ school }}">{{ school }}</option>
-            {% endfor %}
-        </select>
-        <select name="school3">
+        <p> Select all QB schools you've been accepted to: </p>
+        <select multiple name="school1">
             <option disabled selected value=""></option>
             {% for school in schools %}
                 <option value="{{ school }}">{{ school }}</option>
             {% endfor %}
         </select>
     </div>
+</form>
+<h3>Mentees</h3>
+<form action="/mentorsurvey" method="post">
+    <div class="mb-3">
+        <p> Choose how many mentees you are willing to take (max 5): </p>
+        <label for="menteecount">Number of Mentees: </label>
+        <select name="menteecount" id="menteecount">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+</form>
 {% endblock %}
