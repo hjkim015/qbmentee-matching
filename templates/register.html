@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Mentee Registration
+    Register
 {% endblock %}
 
 {% block main %}
-<form action="/menteeRegistration" method="post">
+<form action="/mentorRegistration" method="post">
     <div class="mb-3">
         <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
     </div>
@@ -13,14 +13,22 @@
         <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
     </div>
     <div class="mb-3">
-        <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Password Confirmation" type="password">
+        <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirm Password" type="password">
     </div>
     <div class="mb-3">
         <input class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="email">
     </div>
+    
     <div class="mb-3">
         <input class="form-control mx-auto w-auto" id="discord" name="discord" placeholder="Discord Handle" type="text">
     </div>
+    <div class="mb-3">
+        <select name ="role" id ="role" placeholder="Role">
+            <option class="form-control mx-auto w-auto">Mentor</option>
+            <option class="form-control mx-auto w-auto">Mentee</option>
+        </select>
+    </div>
     <button class="btn btn-primary" type="submit">Next --></button>
+    
 </form>
 {% endblock %}
