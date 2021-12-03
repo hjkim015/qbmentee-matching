@@ -22,8 +22,8 @@
                 <div class="collapse navbar-collapse" id="navbar">
                     {% if session["mentor"] %}
                         <ul class="navbar-nav me-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/MentorProfile">Profile</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/Mentees">Buy</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/mentorDashboard">Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/mentorProfile">Profile</a></li>
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
@@ -40,9 +40,8 @@
                     </ul>
                     {% else %}
                         <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/mentorRegistration"> Mentor Registration</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/menteeRegistration"> Mentee Registration</a></li>
-
+                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/mentorSurvey">Mentor Survey</a></li>
                             <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
                         </ul>
                     {% endif %}
