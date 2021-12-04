@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request, session
-# from helpers import login_required
-# from flask_session import Session
+# from helpers import matching_algorithm
+from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -8,28 +8,11 @@ import sqlite3
 import os
 
 app = Flask(__name__)
-db = sqlite3.connect('qbspark.db')
-
-
-##Algorithm:
-for each mentee:
-    find their ranking preferences (go to rank questions table)
-
-
-    final algorithm: 
+data = sqlite3.connect('qbspark.db', check_same_thread=False)
+db = data.cursor()
 
 #Create users table to keep track of all mentors and mentees
 #Will be used to validate login attempts 
-db.execute('''
-        CREATE TABLE users(
-            user_id int NOT NULL,
-            username text,
-            password text,
-            email text,
-            discord text,
-            role text,
-        ) 
-        ''')
 #Create 
 
 # List of QB schools b/c listing them in survey would be too long and also QB schools have big potential to change
@@ -58,8 +41,25 @@ def login():
 @app.route('/register', methods=["GET", "POST"])
 def registerMentee():
     """Register users"""
+    ##Must also check that a user is not signing up twice. 
     if request.method == "GET":
         return render_template("register.html")
+    else:
+        role = request.form.get("role")
+        username = request.form.get("username")
+        password = request.form.get("password")
+        email = request.form.get("email")
+        discord = request.form.get("discord")
+
+        if role == "Mentor":
+            db.execute("INSERT INTO mentors (username, password, email, discord) VALUES (?,?,?,?)", (username, password, email, discord))
+            data.commit()
+            return render_template("mentorSurvey.html")
+        else:
+            db.execute("INSERT INTO mentees (username, password, email, discord) VALUES (?,?,?,?)", (username, password, email, discord))
+            data.commit()
+            return render_template("menteeSurvey.html")
+
 
 #making sure to pass on the list of schools to the html for the mentees and mentors surveys
 @app.route('/menteeSurvey', methods=["GET", "POST"])
@@ -98,8 +98,4 @@ def menteeDashboard():
 def menteeProfile():
     if request.method == "GET":
         return render_template("menteeProfile.html")
-
-
-
-
 
