@@ -1,23 +1,31 @@
 import os 
-from app import db
 from functools import wraps
-from flask import g, request, redirect, url_for, session
-# import requests
+from flask import render_template, escape, code, session, redirect
 import urllib.parse
 
-# def login_required(f):
-#     """
-#     Check to see if a user is logged in or not.
-#     Will redirect user to login page if they are not a user 
-#     https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
-#     """
+def apology(message):
+    return render_template("apology.html", bottom=escape(message)), code
 
-#     @wraps(f)
-#     def decorated_function(*args, **kwargs):
-#         if session.get("user_id") is None:
-#             return redirect("/login")
-#         return f(*args, **kwargs)
-#     return decorated_function
+def login_required(f):
+    """
+    Check to see if a user is logged in or not.
+    Will redirect user to login page if they are not a user 
+    https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
+
+def check_registration(rows, username, password, confirmation):
+    if username == "" or password == "" or confirmation == "":
+        return apology("Must input username, password, and confirmation")
+    elif password != confirmation:
+        return apology("Password and confirmation do not match")
+    elif len(rows) != 0: 
+        return apology("Username already taken.")
 
 
 # def matching_algorithm():
