@@ -4,7 +4,7 @@ from flask import render_template, escape, session, redirect
 import urllib.parse
 
 def apology(message):
-    return render_template("apology.html", bottom=escape(message)), code
+    return render_template("apology.html", bottom=escape(message))
 
 def login_required(f):
     """
@@ -24,7 +24,7 @@ def check_registration(rows, username, password, confirmation):
         return apology("Must input username, password, and confirmation")
     elif password != confirmation:
         return apology("Password and confirmation do not match")
-    elif len(rows) != 0: 
+    elif rows.rowcount() != 0: 
         return apology("Username already taken.")
 
 
