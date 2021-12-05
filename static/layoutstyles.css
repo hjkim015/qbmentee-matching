@@ -1,12 +1,24 @@
-body {
+ body {
     background: #F5891E;
     background: linear-gradient(to right, #dd5c2d, #db954f);
   }
 
-/* Size for brand */
+  /* Maintains container for forms wide enough to be reasonably legible*/
+ .container{
+    width: 4000px;
+    text-align: left;
+ }
+
+ /* Left aligns all form texts*/
+ .container-text{
+    text-align: left;
+ }
+
+  /* Size for brand */
 nav .navbar-brand
 {
     font-size: xx-large;
+    font-family: papyrus;
 }
 
 /* Colors for brand */
@@ -26,4 +38,3 @@ nav .navbar-brand .green
 {
     color: #2e944b;
 }
-

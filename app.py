@@ -38,7 +38,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 #Routes
 @app.route('/')
 def hello():
-    return render_template("home.html")
+    return render_template("home1.html")
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
