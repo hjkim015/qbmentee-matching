@@ -64,37 +64,126 @@ def registerMentee():
         
         #Check registration information then send to respective surveys 
         if role == "Mentor":
-            rows = db.execute("SELECT * FROM mentors WHERE username = ?", (username,))
+            rows = db.execute("SELECT * FROM users WHERE username = ?", (username,))
             # check_registration(rows, username, password, confirmation)
-            db.execute("INSERT INTO mentors (username, password, email, discord) VALUES (?,?,?,?)", (username, generate_password_hash(password), email, discord))
-            new = db.execute("SELECT * FROM mentors WHERE username = ?", (username,))
-            session["user_id"] = new[0]["id"]
+            db.execute("INSERT INTO users (username, password, email, discord, role) VALUES (?,?,?,?,?)", (username, generate_password_hash(password), email, discord, 1))
+            new = db.execute("SELECT * FROM users WHERE username = ?", (username,))
+            session["user_id"] = new.fetchall()[0][0]
             data.commit()
-            return render_template("mentorSurvey.html")
+            return redirect("/mentorSurvey")
         else:
-            rows = db.execute("SELECT * FROM mentees WHERE username = ?", (username,))
+            rows = db.execute("SELECT * FROM users WHERE username = ?", (username,))
             # check_registration(rows, username, password, confirmation)
-            db.execute("INSERT INTO mentees (username, password, email, discord) VALUES (?,?,?,?)", (username, generate_password_hash(password), email, discord))
-            new = db.execute("SELECT * FROM mentees WHERE username = ?", (username,))
-            session["user_id"] = new[0]["id"]
+            db.execute("INSERT INTO users (username, password, email, discord, role) VALUES (?,?,?,?,?)", (username, generate_password_hash(password), email, discord, 0))
+            new = db.execute("SELECT * FROM users WHERE username = ?", (username,))
+            session["user_id"] = new.fetchall()[0][0]
             data.commit()
-            return render_template("menteeSurvey.html")
+            return redirect("/menteeSurvey")
 
 #making sure to pass on the list of schools to the html for the mentees and mentors surveys
 @app.route('/menteeSurvey', methods=["GET", "POST"])
 def surveyMentee():
     if request.method == "GET":
         return render_template("menteeSurvey.html", schools=schools)
-    # else: 
-    #     #Add all of their answers to the database! 
-    #     db.execute
-    #if the next button is clicked + the role selected is mentee
+    else:
+        user_id = session["user_id"]
+        #Store terms and conditions data 
+        term_one = request.form.get("term_one")
+        term_two = request.form.get("term_two")
+        term_three = request.form.get("term_three")
+        term_four = request.form.get("term_four")
+        db.execute("INSERT INTO users (term_one, term_two, term_three, term_four) VALUES (?,?,?,?)", (term_one, term_two, term_three, term_four))
+        ##TODO Check that the terms and conditions are all agree statements. 
+
+        #Store survey data about ethnic background
+        black = request.form.get("black")
+        asian = request.form.get("asian")
+        american_indian = request.form.get("native")
+        pacific_islander = request.form.get("pacific")
+        white = request.form.get("white")
+        latinx = request.form.get("latinx")
+        none_ethnicity = request.form.get("none_ethnicity")
+        db.execute("INSERT INTO ethnicity (person_id, black, asian, american_india, pacific_islander, white, latinx, none) VALUES (?,?,?,?,?,?,?,?)", (user_id, black, asian, american_indian, pacific_islander, white, latinx, none_ethnicity))
+
+        #Store survey data about religious background
+        religion = request.form.get("religion")
+        db.execute("INSERT INTO religion (person_id, religion) VALUES (?,?)", (user_id, religion))
+
+        #Store survey data about gender identity
+        gender = request.form.get("gender")
+        db.execute("INSERT INTO gender (person_id, gender) VALUES (?,?)", (user_id, gender))
+        
+        #Store survey data about citzenship status
+        citizenship = request.form.get("citizenship")
+        db.execute("INSERT INTO citizenship (person_id, citizenship) VALUES (?,?)", (user_id, citizenship))
+
+        #Store survey data about academic pathway
+        academic_pathway = request.form.get("academics")
+        db.execute("INSERT INTO academics (person_id, academic_pathway) VALUES (?,?)", (user_id, academic_pathway))
+
+        #Store rankings 
+        academic_rank = request.form.get("academicrank")
+        gender_rank = request.form.get("genderrank")
+        religion_rank = request.form.get("religionrank")
+        ethnicity_rank = request.form.get("racerank")
+        citizenship_rank = request.form.get("citizenshiprank")
+        db.execute("INSERT INTO rankings (person_id, academics, gender, religion, ethnicity, citzenship) VALUES (?,?,?,?,?,?)", (user_id, academic_rank, gender_rank, religion_rank, ethnicity_rank, citizenship_rank))
+        data.commit()
+        return redirect("/menteeDashboard")
+
+
 
 @app.route('/mentorSurvey', methods=["GET", "POST"])
 def surveyMentor():
     if request.method == "GET":
         return render_template("mentorSurvey.html")
-    ##if next button is clicked + the role selected is mentor
+    else:
+        user_id = session["user_id"]
+
+        #Store terms and conditions data 
+        term_one = request.form.get("term_one")
+        term_two = request.form.get("term_two")
+        term_three = request.form.get("term_three")
+        term_four = request.form.get("term_four")
+        term_five = request.form.get("term_five")
+        db.execute("INSERT INTO users (term_one, term_two, term_three, term_four, term_five) VALUES (?,?,?,?,?)", (term_one, term_two, term_three, term_four, term_five))
+        ##TODO Check that the terms and conditions are all agree statements. 
+
+        #Store survey data about ethnic background
+        black = request.form.get("black")
+        asian = request.form.get("asian")
+        american_indian = request.form.get("native")
+        pacific_islander = request.form.get("pacific")
+        white = request.form.get("white")
+        latinx = request.form.get("latinx")
+        none_ethnicity = request.form.get("none_ethnicity")
+        db.execute("INSERT INTO ethnicity (person_id, black, asian, american_india, pacific_islander, white, latinx, none) VALUES (?,?,?,?,?,?,?,?)", (user_id, black, asian, american_indian, pacific_islander, white, latinx, none_ethnicity))
+
+        #Store survey data about religious background
+        religion = request.form.get("religion")
+        db.execute("INSERT INTO religion (person_id, religion) VALUES (?,?)", (user_id, religion))
+
+        #Store survey data about gender identity
+        gender = request.form.get("gender")
+        db.execute("INSERT INTO gender (person_id, gender) VALUES (?,?)", (user_id, gender))
+        
+        #Store survey data about citzenship status
+        citizenship = request.form.get("citizenship")
+        db.execute("INSERT INTO citizenship (person_id, citizenship) VALUES (?,?)", (user_id, citizenship))
+
+        #Store survey data about academic pathway
+        academic_pathway = request.form.get("academics")
+        db.execute("INSERT INTO academics (person_id, academic_pathway) VALUES (?,?)", (user_id, academic_pathway))
+
+        #Store mentee_count
+        mentee_count = request.form.get("menteecount")
+        db.execute("INSERT INTO mentee_count (person_id, mentee_count) VALUES (?,?)", (user_id, mentee_count))
+        data.commit()
+        
+        return redirect("/mentorDashboard")
+        # return render_template("mentorDashboard.html")
+
+
 
 @login_required
 @app.route('/mentorDashboard', methods=["GET", "POST"])
