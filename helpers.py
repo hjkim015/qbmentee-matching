@@ -1,6 +1,6 @@
 import os 
 from functools import wraps
-from flask import render_template, escape, code, session, redirect
+from flask import render_template, escape, session, redirect
 import urllib.parse
 
 def apology(message):

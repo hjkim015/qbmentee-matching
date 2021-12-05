@@ -1,6 +1,6 @@
-from flask import Flask, redirect, render_template, request, session, escape, code
+from flask import Flask, redirect, render_template, request, session, escape
 from functools import wraps
-# # from helpers import apology, login_required, check_registration
+from helpers import apology, login_required, check_registration
 from flask_session import Session
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -9,7 +9,6 @@ import os
 
 #Configure application 
 app = Flask(__name__)
-# app.secret_key = 'super secret key'
 
 ##Configure Session to use filesystem
 app.config["SESSION_PERMANENT"] = False
@@ -35,30 +34,6 @@ schools = ["Amherst College", "Barnard College", "Boston College", "Boston Unive
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-#Helper Functions
-def apology(message):
-    return render_template("apology.html", bottom=escape(message)), code
-
-def login_required(f):
-    """
-    Check to see if a user is logged in or not.
-    Will redirect user to login page if they are not a user 
-    https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function
-
-def check_registration(rows, username, password, confirmation):
-    if username == "" or password == "" or confirmation == "":
-        return apology("Must input username, password, and confirmation")
-    elif password != confirmation:
-        return apology("Password and confirmation do not match")
-    elif len(rows) != 0: 
-        return apology("Username already taken.")
 
 #Routes
 @app.route('/')
@@ -90,7 +65,7 @@ def registerMentee():
         #Check registration information then send to respective surveys 
         if role == "Mentor":
             rows = db.execute("SELECT * FROM mentors WHERE username = ?", (username,))
-            check_registration(rows, username, password, confirmation)
+            # check_registration(rows, username, password, confirmation)
             db.execute("INSERT INTO mentors (username, password, email, discord) VALUES (?,?,?,?)", (username, generate_password_hash(password), email, discord))
             new = db.execute("SELECT * FROM mentors WHERE username = ?", (username,))
             session["user_id"] = new[0]["id"]
@@ -98,7 +73,7 @@ def registerMentee():
             return render_template("mentorSurvey.html")
         else:
             rows = db.execute("SELECT * FROM mentees WHERE username = ?", (username,))
-            check_registration(rows, username, password, confirmation)
+            # check_registration(rows, username, password, confirmation)
             db.execute("INSERT INTO mentees (username, password, email, discord) VALUES (?,?,?,?)", (username, generate_password_hash(password), email, discord))
             new = db.execute("SELECT * FROM mentees WHERE username = ?", (username,))
             session["user_id"] = new[0]["id"]
