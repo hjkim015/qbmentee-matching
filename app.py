@@ -43,9 +43,21 @@ def hello():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     """log in the user"""
+    session.clear()
     ##If the method is post, then go to the dashboard of mentor or mentee
     if request.method == "GET":
         return render_template("login.html")
+    else: 
+        email = request.form.get("email")
+        rows = db.execute("SELECT * FROM users WHERE email = ?", email)
+        data.commit()
+        if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
+            return apology("invalid email and/or password")
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect("/")
 
 @app.route('/register', methods=["GET", "POST"])
 def registerMentee():
