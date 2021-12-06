@@ -48,13 +48,18 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     else: 
-        email = request.form.get("email")
-        rows = db.execute("SELECT * FROM users WHERE email = ?", (email,))
+        username = request.form.get("username")
+        role = request.form.get("role")
+        rows = db.execute("SELECT * FROM users WHERE username = ?", (username,))
         data.commit()
         # if not check_password_hash(rows[0][2], request.form.get("password")):
         #     return apology("invalid email and/or password")
+        #Assign the session user id
         session["user_id"] = rows.fetchall()[0][0]
-        return redirect("/mentorDashboard")
+        if role == "mentor":
+            return redirect("/mentorDashboard")
+        else: 
+            return redirect("/menteeDashboard")
 
 @app.route('/logout')
 def logout():
@@ -65,7 +70,6 @@ def logout():
 def registerMentee():
     """Register users"""
     session.clear()
-
     if request.method == "GET":
         return render_template("register.html")
     else:
@@ -103,7 +107,6 @@ def surveyMentee():
         return render_template("menteeSurvey.html", schools=schools)
     else:
         user_id = session["user_id"]
-
         #Store terms and conditions data 
         term_one = request.form.get("term_one")
         term_two = request.form.get("term_two")
