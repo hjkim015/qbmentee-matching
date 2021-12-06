@@ -1,0 +1,38 @@
+{% extends "layout2.html" %}
+
+{% block title %}
+    Scheduling through When2Meet
+{% endblock %}
+
+{% block main %}
+<body style="background-color:rgb(245, 217, 165);">
+<form action="/schedulerMentor" method="post" required>
+  <!--Choosing mentee to schedule meeting with-->
+  <label for="who">Choose your mentee:</label>
+  <div style="height: 20px;"></div>
+  <select name="who">
+    <option disabled selected value=""></option>
+    {% for mymentee in mymentees %}
+        <option value="{{ mymentee }}">{{ mymentee }}</option>
+    {% endfor %}
+  </select>
+  <div style="height: 20px;"></div>
+  <label for="date">Select Meeting Date:</label>
+  <div style="height: 20px;"></div>
+    <input type="date" id="date" name="date">
+    <div style="height: 20px;"></div>
+  <label for="time">Select Meeting Time:</label>
+  <div style="height: 20px;"></div>
+  <input type="time" name="time">
+  <div style="height: 20px;"></div>
+  <label for="link">Insert meeting link:</label>
+  <div style="height: 20px;"></div>
+  <input type="url" name="link">
+  <div style="height: 20px;"></div>
+  <div>
+    <input type="submit">
+  </div>
+</form>
+</body>
+
+{% endblock %}

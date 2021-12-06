@@ -103,6 +103,7 @@ def surveyMentee():
         return render_template("menteeSurvey.html", schools=schools)
     else:
         user_id = session["user_id"]
+
         #Store terms and conditions data 
         term_one = request.form.get("term_one")
         term_two = request.form.get("term_two")
@@ -193,7 +194,7 @@ def surveyMentor():
 
         #Store mentee_count
         mentee_count = request.form.get("menteecount")
-        db.execute("INSERT INTO mentee_count (person_id, mentee_count) VALUES (?,?)", (user_id, mentee_count))
+        db.execute("INSERT INTO mentee_count (person_id, mentee_count, mentees_left) VALUES (?,?,?)", (user_id, mentee_count, mentee_count))
         data.commit()
         
         return redirect("/mentorDashboard")
@@ -226,3 +227,51 @@ def menteeProfile():
         return render_template("menteeProfile.html")
 
 
+@login_required
+@app.route('/schedulerMentor', methods=["GET", "POST"])
+def schedulerMentor():
+    if request.method == "GET":
+        # Making sure to have a list of corresponding mentees to schedule with
+        mymentees = []
+        mymentees = db.execute("SELECT username FROM users WHERE person_id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", session["user_id"])
+        return render_template("schedulerMentor.html", mymentees = mymentees)
+    else:
+        # Transfering data into table for meeting times
+        link = request.form.get("link")
+        date = request.form.get("date")
+        time= request.form.get("time")
+        receiver = db.execute("SELECT user_id FROM user WHERE username = ?", request.form.get("who"))
+        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", session["user_id"], receiver, date, time, link)
+        redirect("/")
+
+
+@login_required
+@app.route('/schedulerMentee', methods=["GET", "POST"])
+def schedulerMentee():
+    if request.method == "GET":
+        return render_template("schedulerMentee.html")
+    else:
+        link = request.form.get("link")
+        date = request.form.get("date")
+        time= request.form.get("time")
+        receiver = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ?", session["user_id"])
+        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", session["user_id"], receiver, date, time, link)
+        redirect("/")
+
+@login_required
+@app.route('/notes', methods=["GET", "POST"])
+def notesMentor():
+    if request.method == "GET":
+        return render_template("notes.html")
+
+@login_required
+@app.route('/resourcesMentor', methods=["GET", "POST"])
+def resourcesMentor():
+    if request.method == "GET":
+        return render_template("resourcesMentor.html")
+
+@login_required
+@app.route('/resourcesMentee', methods=["GET", "POST"])
+def resourcesMentee():
+    if request.method == "GET":
+        return render_template("resourcesMentee.html")
