@@ -46,12 +46,32 @@ def login():
     ##If the method is post, then go to the dashboard of mentor or mentee
     if request.method == "GET":
         return render_template("login.html")
+<<<<<<< HEAD
+=======
+    else: 
+        username = request.form.get("username")
+        role = request.form.get("role")
+        rows = db.execute("SELECT * FROM users WHERE username = ?", (username,))
+        data.commit()
+        # if not check_password_hash(rows[0][2], request.form.get("password")):
+        #     return apology("invalid email and/or password")
+        #Assign the session user id
+        session["user_id"] = rows.fetchall()[0][0]
+        if role == "mentor":
+            return redirect("/mentorDashboard")
+        else: 
+            return redirect("/menteeDashboard")
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect("/")
+>>>>>>> b2b81fe98ee6ebf066011600c7bb2d3b4c3143a4
 
 @app.route('/register', methods=["GET", "POST"])
 def registerMentee():
     """Register users"""
     session.clear()
-
     if request.method == "GET":
         return render_template("register.html")
     else:
@@ -69,6 +89,7 @@ def registerMentee():
             db.execute("INSERT INTO users (username, password, email, discord, role) VALUES (?,?,?,?,?)", (username, generate_password_hash(password), email, discord, 1))
             new = db.execute("SELECT * FROM users WHERE username = ?", (username,))
             session["user_id"] = new.fetchall()[0][0]
+            session["role"] = "mentor"
             data.commit()
             return redirect("/mentorSurvey")
         else:
@@ -77,6 +98,7 @@ def registerMentee():
             db.execute("INSERT INTO users (username, password, email, discord, role) VALUES (?,?,?,?,?)", (username, generate_password_hash(password), email, discord, 0))
             new = db.execute("SELECT * FROM users WHERE username = ?", (username,))
             session["user_id"] = new.fetchall()[0][0]
+            session["role"] = "mentee"
             data.commit()
             return redirect("/menteeSurvey")
 
@@ -87,7 +109,6 @@ def surveyMentee():
         return render_template("menteeSurvey.html", schools=schools)
     else:
         user_id = session["user_id"]
-
         #Store terms and conditions data 
         term_one = request.form.get("term_one")
         term_two = request.form.get("term_two")
