@@ -46,8 +46,6 @@ def login():
     ##If the method is post, then go to the dashboard of mentor or mentee
     if request.method == "GET":
         return render_template("login.html")
-<<<<<<< HEAD
-=======
     else: 
         username = request.form.get("username")
         role = request.form.get("role")
@@ -66,7 +64,6 @@ def login():
 def logout():
     session.clear()
     return redirect("/")
->>>>>>> b2b81fe98ee6ebf066011600c7bb2d3b4c3143a4
 
 @app.route('/register', methods=["GET", "POST"])
 def registerMentee():
