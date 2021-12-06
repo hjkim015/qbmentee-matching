@@ -11,9 +11,39 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-chart-area me-1"></i>
-                Area Chart Example
+                Meetings Scheduled
             </div>
-            <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Scheduler</th>
+                    <th scope="col">Receiver</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Link</th>
+                    <th scope="col">Delete?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                {% for sender in senders %}
+                    <td>{{sender}}</td>
+                {% endfor %}
+                {% for receiver in receivers %}
+                    <td>{{receiver}}</td>
+                {% endfor %}
+                {% for date in dates %}
+                    <td>{{date}}</td>
+                {% endfor %}
+                {% for time in times %}
+                    <td>{{time}}</td>
+                {% endfor %}
+                {% for link in links %}
+                    <td>{{link}}</td>
+                {% endfor %}
+                  </tr>
+                </tbody>
+              </table>
         </div>
     </div>
 {% endblock %}

@@ -150,7 +150,7 @@ def surveyMentee():
         data.commit()
 
         #Run the matching algorithm so that mentee gets a mentor
-        matching_algorithm()
+        #matching_algorithm()
         return redirect("/menteeDashboard")
 
 
@@ -211,7 +211,13 @@ def surveyMentor():
 @app.route('/mentorDashboard', methods=["GET", "POST"])
 def mentorDashboard():
     if request.method == "GET":
-        return render_template("mentorDashboard.html")
+        # Information for the meetings table
+        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],))
+        senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],))
+        dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], ))
+        times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
+        links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
+        return render_template("mentorDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links))
 
 @login_required
 @app.route('/mentorProfile', methods=["GET", "POST"])
@@ -226,7 +232,13 @@ def menteeDashboard():
         id = session["user_id"]
         mentor_id = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,))
         mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id))
-        return render_template("menteeDashboard.html", mentor_name = mentor_name)
+        # Information for the meetings table
+        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],))
+        senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],))
+        dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], ))
+        times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
+        links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
+        return render_template("mentorDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mentor_name = mentor_name)
 
 @login_required
 @app.route('/menteeProfile', methods=["GET", "POST"])
@@ -240,17 +252,16 @@ def menteeProfile():
 def schedulerMentor():
     if request.method == "GET":
         # Making sure to have a list of corresponding mentees to schedule with
-        mymentees = []
-        mymentees = db.execute("SELECT username FROM users WHERE person_id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"]))
+        mymentees = db.execute("SELECT username FROM users WHERE id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"], ))
         return render_template("schedulerMentor.html", mymentees = mymentees)
     else:
         # Transfering data into table for meeting times
         link = request.form.get("link")
         date = request.form.get("date")
         time= request.form.get("time")
-        receiver = db.execute("SELECT user_id FROM user WHERE username = ?", (request.form.get("who")))
+        receiver = db.execute("SELECT id FROM users WHERE username = ?", (request.form.get("who"), ))
         db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", session["user_id"], (receiver, date, time, link))
-        redirect("/")
+        redirect("/mentorDashboard")
 
 
 @login_required
@@ -264,7 +275,7 @@ def schedulerMentee():
         time= request.form.get("time")
         receiver = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ?", (session["user_id"]))
         db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", (session["user_id"], receiver, date, time, link))
-        redirect("/")
+        redirect("/menteeDashboard")
 
 @login_required
 @app.route('/notes', methods=["GET", "POST"])

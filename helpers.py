@@ -38,7 +38,7 @@ def matching_algorithm():
     mentees = db.execute("SELECT id FROM users WHERE role = ?", (0, ))
 # Create a list of mentors to go through, using only user id
     mentors = []
-    mentors = db.execute("SELECT id FROM mentors")
+    mentors = db.execute("SELECT id FROM users WHERE role = ?", (1, ))
 # Count the number of mentors in the database
     cmentors = db.execute("SELECT * FROM users WHERE role = ?", (1, ))
     mentor_count = cmentors.rowcount()

@@ -14,7 +14,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/">Spark!</a>
+            <h5 class="navbar-brand ps-3">Spark!</h5>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
@@ -37,12 +37,12 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             {% if session["role"] == "mentor" %}
-                            <a class="nav-link" href="mentorDashboard.html">
+                            <a class="nav-link" href="/mentorDashboard">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
                             {% elif session["role"] == "mentee" %}
-                            <a class="nav-link" href="menteeDashboard.html">
+                            <a class="nav-link" href="/menteeDashboard">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
