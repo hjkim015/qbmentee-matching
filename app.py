@@ -49,10 +49,12 @@ def login():
         return render_template("login.html")
     else: 
         email = request.form.get("email")
-        rows = db.execute("SELECT * FROM users WHERE email = ?", email)
+        rows = db.execute("SELECT * FROM users WHERE email = ?", (email,))
         data.commit()
-        if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
-            return apology("invalid email and/or password")
+        # if not check_password_hash(rows[0][2], request.form.get("password")):
+        #     return apology("invalid email and/or password")
+        session["user_id"] = rows.fetchall()[0][0]
+        return redirect("/mentorDashboard")
 
 @app.route('/logout')
 def logout():
@@ -81,6 +83,7 @@ def registerMentee():
             db.execute("INSERT INTO users (username, password, email, discord, role) VALUES (?,?,?,?,?)", (username, generate_password_hash(password), email, discord, 1))
             new = db.execute("SELECT * FROM users WHERE username = ?", (username,))
             session["user_id"] = new.fetchall()[0][0]
+            session["role"] = "mentor"
             data.commit()
             return redirect("/mentorSurvey")
         else:
@@ -89,6 +92,7 @@ def registerMentee():
             db.execute("INSERT INTO users (username, password, email, discord, role) VALUES (?,?,?,?,?)", (username, generate_password_hash(password), email, discord, 0))
             new = db.execute("SELECT * FROM users WHERE username = ?", (username,))
             session["user_id"] = new.fetchall()[0][0]
+            session["role"] = "mentee"
             data.commit()
             return redirect("/menteeSurvey")
 
