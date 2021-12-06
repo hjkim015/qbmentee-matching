@@ -43,21 +43,9 @@ def hello():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     """log in the user"""
-    session.clear()
     ##If the method is post, then go to the dashboard of mentor or mentee
     if request.method == "GET":
         return render_template("login.html")
-    else: 
-        email = request.form.get("email")
-        rows = db.execute("SELECT * FROM users WHERE email = ?", email)
-        data.commit()
-        if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
-            return apology("invalid email and/or password")
-
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect("/")
 
 @app.route('/register', methods=["GET", "POST"])
 def registerMentee():
@@ -229,15 +217,15 @@ def schedulerMentor():
     if request.method == "GET":
         # Making sure to have a list of corresponding mentees to schedule with
         mymentees = []
-        mymentees = db.execute("SELECT username FROM users WHERE person_id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", session["user_id"])
+        mymentees = db.execute("SELECT username FROM users WHERE person_id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"]))
         return render_template("schedulerMentor.html", mymentees = mymentees)
     else:
         # Transfering data into table for meeting times
         link = request.form.get("link")
         date = request.form.get("date")
         time= request.form.get("time")
-        receiver = db.execute("SELECT user_id FROM user WHERE username = ?", request.form.get("who"))
-        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", session["user_id"], receiver, date, time, link)
+        receiver = db.execute("SELECT user_id FROM user WHERE username = ?", (request.form.get("who")))
+        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", session["user_id"], (receiver, date, time, link))
         redirect("/")
 
 
@@ -250,8 +238,8 @@ def schedulerMentee():
         link = request.form.get("link")
         date = request.form.get("date")
         time= request.form.get("time")
-        receiver = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ?", session["user_id"])
-        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", session["user_id"], receiver, date, time, link)
+        receiver = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ?", (session["user_id"]))
+        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", (session["user_id"], receiver, date, time, link))
         redirect("/")
 
 @login_required

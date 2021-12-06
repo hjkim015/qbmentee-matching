@@ -36,31 +36,25 @@
                     </div>
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            {% if session["mentor"] %}
+                            {% if session["role"] == "mentor" %}
                             <a class="nav-link" href="mentorDashboard.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            {% elif session["mentee"] %}
+                            {% elif session["role"] == "mentee" %}
                             <a class="nav-link" href="menteeDashboard.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            {% else %}
                             {% endif %}
                             <div class="sb-sidenav-menu-heading">Interactions</div>
-                            {% if session["mentor"] %}
+                            {% if session["role"] == "mentor" %}
                             <a class="nav-link" href="/schedulerMentor">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Scheduler
                             </a>
-                            {% elif session["mentee"] %}
+                            {% elif session["role"] == "mentee" %}
                             <a class="nav-link" href="/schedulerMentee">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Scheduler
-                            </a>
-                            {% else %}
-                            <a class="nav-link" href="/schedulerMentor">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Scheduler
                             </a>
@@ -69,18 +63,13 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Notetaking
                             </a>
-                            {% if session["mentor"] %}
+                            {% if session["role"] == "mentor" %}
                             <a class="nav-link" href="/resourcesMentor">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Resources
                             </a>
-                            {% elif session["mentee"] %}
+                            {% elif session["role"] == "mentee" %}
                             <a class="nav-link" href="/resourcesMentee">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Resources
-                            </a>
-                            {% else %}
-                            <a class="nav-link">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Resources
                             </a>

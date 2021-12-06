@@ -22,7 +22,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                     <!--Specifies what should be in the top menu options if a mentor is logged on-->
-                    {% if session["mentor"] %}
+                    {% if session["role"] == "mentor" %}
                         <ul class="navbar-nav me-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/mentorDashboard">Dashboard</a></li>
                             <li class="nav-item"><a class="nav-link" href="/mentorProfile">Profile</a></li>
@@ -31,7 +31,7 @@
                             <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
                         </ul>
                     <!--Specifies what should be in the top menu options if a mentee is logged on-->
-                    {% elif session["mentee"] %}
+                    {% elif session["role"] == "mentee" %}
                     <ul class="navbar-nav me-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="/MenteeProfile">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Mentor">Mentor</a></li>
