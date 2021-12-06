@@ -1,7 +1,7 @@
 {% extends "layout2.html" %}
 
 {% block title %}
-    Scheduling through When2Meet
+    Scheduling a Meeting
 {% endblock %}
 
 {% block main %}
@@ -10,10 +10,10 @@
   <!--Choosing mentee to schedule meeting with-->
   <label for="who">Choose your mentee:</label>
   <div style="height: 20px;"></div>
-  <select name="who">
+  <select>
     <option disabled selected value=""></option>
     {% for mymentee in mymentees %}
-        <option value="{{ mymentee }}">{{ mymentee }}</option>
+        <option name="who" value="{{ mymentee }}">{{ mymentee }}</option>
     {% endfor %}
   </select>
   <div style="height: 20px;"></div>

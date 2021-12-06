@@ -32,19 +32,36 @@ def check_registration(rows, username, password, confirmation):
         return apology("Username already taken.")
 
 
+<<<<<<< HEAD
 def matching_algorithm(mentee_id):
     # mentees = db.execute("SELECT id FROM users WHERE role = ?", (0, ))
     # print((mentees.fetchall()[0]))
     # print(len(mentees.fetchall()))
+=======
+def matching_algorithm():
+    mentees = db.execute("SELECT id FROM users WHERE role = ?", (0, ))
+<<<<<<< HEAD
+# Create a list of mentors to go through, using only user id
+    mentors = []
+    mentors = db.execute("SELECT id FROM users WHERE role = ?", (1, ))
+# Count the number of mentors in the database
+=======
+>>>>>>> 4f166d7cbbb6670694ac046d73095aacef3d88b2
     mentors = db.execute("SELECT id FROM users WHERE role = ?", (1, ))
     print(len(mentors.fetchall()))
     print("TEST")
 
     #Count the number of mentors in the database
+<<<<<<< HEAD
     cmentors = db.execute("SELECT * FROM users WHERE role = ?", (1, )).fetchall()
     print("TEST BEFORE", cmentors)
     mentor_count = int(len(cmentors))
     # print("mentor_count start", mentor_count)
+=======
+>>>>>>> 16ac31a1372d9ff862820ec6a4488a78feb5cf54
+    cmentors = db.execute("SELECT * FROM users WHERE role = ?", (1, ))
+    mentor_count = cmentors.rowcount
+>>>>>>> 4f166d7cbbb6670694ac046d73095aacef3d88b2
     status = 1
 
     # for  in mentees.fetchall():
@@ -136,5 +153,5 @@ def matching_algorithm(mentee_id):
         data.commit()
 
 
-matching_algorithm(109)
+# matching_algorithm(109)
     
