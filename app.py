@@ -205,8 +205,6 @@ def surveyMentor():
         return redirect("/mentorDashboard")
         # return render_template("mentorDashboard.html")
 
-
-
 @login_required
 @app.route('/mentorDashboard', methods=["GET", "POST"])
 def mentorDashboard():
@@ -224,8 +222,12 @@ def mentorProfile():
 def menteeDashboard():
     if request.method == "GET":
         id = session["user_id"]
-        mentor_id = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,))
-        mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id))
+        mentor_id = str(db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,)))
+        if mentor_id == 0:
+            mentor_name = 0
+        else:
+            mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id, ))
+
         return render_template("menteeDashboard.html", mentor_name = mentor_name)
 
 @login_required
@@ -233,7 +235,6 @@ def menteeDashboard():
 def menteeProfile():
     if request.method == "GET":
         return render_template("menteeProfile.html")
-
 
 @login_required
 @app.route('/schedulerMentor', methods=["GET", "POST"])
