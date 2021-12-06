@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request, session, escape
 from functools import wraps
-from helpers import apology, login_required, check_registration
+from helpers import apology, login_required, matching_algorithm
 from flask_session import Session
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -66,7 +66,7 @@ def logout():
     return redirect("/")
 
 @app.route('/register', methods=["GET", "POST"])
-def registerMentee():
+def register():
     """Register users"""
     session.clear()
     if request.method == "GET":
@@ -148,6 +148,9 @@ def surveyMentee():
         citizenship_rank = request.form.get("citizenshiprank")
         db.execute("INSERT INTO rankings (person_id, academics, gender, religion, ethnicity, citzenship) VALUES (?,?,?,?,?,?)", (user_id, academic_rank, gender_rank, religion_rank, ethnicity_rank, citizenship_rank))
         data.commit()
+
+        #Run the matching algorithm so that mentee gets a mentor
+        matching_algorithm()
         return redirect("/menteeDashboard")
 
 
@@ -220,7 +223,10 @@ def mentorProfile():
 @app.route('/menteeDashboard', methods=["GET", "POST"])
 def menteeDashboard():
     if request.method == "GET":
-        return render_template("menteeDashboard.html")
+        id = session["user_id"]
+        mentor_id = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,))
+        mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id))
+        return render_template("menteeDashboard.html", mentor_name = mentor_name)
 
 @login_required
 @app.route('/menteeProfile', methods=["GET", "POST"])
