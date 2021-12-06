@@ -150,7 +150,7 @@ def surveyMentee():
         data.commit()
 
         #Run the matching algorithm so that mentee gets a mentor
-        matching_algorithm()
+        matching_algorithm(user_id)
         return redirect("/menteeDashboard")
 
 
@@ -226,7 +226,7 @@ def menteeDashboard():
         if mentor_id == 0:
             mentor_name = 0
         else:
-            mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id, ))
+            mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id, )).fetchall()[0]
 
         return render_template("menteeDashboard.html", mentor_name = mentor_name)
 
