@@ -24,29 +24,28 @@
                     <!--Specifies what should be in the top menu options if a mentor is logged on-->
                     {% if session["role"] == "mentor" %}
                         <ul class="navbar-nav me-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/mentorDashboard">Dashboard</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/mentorProfile">Profile</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link" href="/mentorDashboard">Dashboard</a></li> -->
+                            <!-- <li class="nav-item"><a class="nav-link" href="/mentorProfile">Profile</a></li> -->
+                            <!-- <p>Mentor Registration</p> -->
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li> -->
                         </ul>
                     <!--Specifies what should be in the top menu options if a mentee is logged on-->
                     {% elif session["role"] == "mentee" %}
                     <ul class="navbar-nav me-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/MenteeProfile">Profile</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="/MenteeProfile">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Mentor">Mentor</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/schedule">Schedule</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/schedule">Schedule</a></li> -->
 
                     </ul>
                     <ul class="navbar-nav ms-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li> -->
                     </ul>
                     {% else %}
                     <!--Specifies what should be in the top menu options if a user is yet to be logged on-->
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/mentorSurvey">Mentor Survey</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/menteeSurvey">Mentee Survey</a></li>
                             <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
                         </ul>
                     {% endif %}
