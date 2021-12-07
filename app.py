@@ -150,10 +150,8 @@ def surveyMentee():
         data.commit()
 
         #Run the matching algorithm so that mentee gets a mentor
-        #matching_algorithm()
+        matching_algorithm(user_id)
         return redirect("/menteeDashboard")
-
-
 
 @app.route('/mentorSurvey', methods=["GET", "POST"])
 def surveyMentor():
