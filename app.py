@@ -209,11 +209,11 @@ def surveyMentor():
 def mentorDashboard():
     if request.method == "GET":
         # Information for the meetings table
-        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],))
-        senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],))
-        dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], ))
-        times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
-        links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
+        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],)).fetchall()
+        senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],)).fetchall()
+        dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], )).fetchall()
+        times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
+        links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
         return render_template("mentorDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links))
 
 @login_required
@@ -227,15 +227,15 @@ def mentorProfile():
 def menteeDashboard():
     if request.method == "GET":
         id = session["user_id"]
-        mentor_id = str(db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id, )))
-        mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id, ))
+        mentor_id = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,)).fetchall()
+        mentor_name = db.execute("SELECT username FROM users WHERE id = ?", mentor_id[0]).fetchall()
         # Information for the meetings table
-        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],))
-        senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],))
-        dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], ))
-        times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
-        links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
-        return render_template("mentorDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mentor_name = mentor_name)
+        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],)).fetchall()
+        senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],)).fetchall()
+        dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], )).fetchall()
+        times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
+        links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
+        return render_template("menteeDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mentor_name = mentor_name)
 
 @login_required
 @app.route('/menteeProfile', methods=["GET", "POST"])
