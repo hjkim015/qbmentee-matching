@@ -50,7 +50,6 @@ def matching_algorithm(mentee_id):
     mentor_count = cmentors.rowcount
     status = 1
 
-
     # Compatibitility trackers store match score, mentee_id, and mentor_id
     oldcompatibility = [0,0,0]
     newcompatibility = [0,0,0]

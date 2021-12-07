@@ -6,6 +6,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3 
 import os
+import time
 
 #Configure application 
 app = Flask(__name__)
@@ -226,8 +227,8 @@ def mentorProfile():
 def menteeDashboard():
     if request.method == "GET":
         id = session["user_id"]
-        mentor_id = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,))
-        mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id))
+        mentor_id = str(db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id, )))
+        mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id, ))
         # Information for the meetings table
         receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],))
         senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],))
