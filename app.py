@@ -228,7 +228,6 @@ def mentorProfile():
 def menteeDashboard():
     if request.method == "GET":
         id = session["user_id"]
-<<<<<<< HEAD
         mentor_id = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,))
         mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id))
         # Information for the meetings table
@@ -238,15 +237,6 @@ def menteeDashboard():
         times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
         links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],))
         return render_template("mentorDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mentor_name = mentor_name)
-=======
-        mentor_id = str(db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,)))
-        if mentor_id == 0:
-            mentor_name = 0
-        else:
-            mentor_name = db.execute("SELECT username FROM users WHERE id = ?", (mentor_id, ))
-
-        return render_template("menteeDashboard.html", mentor_name = mentor_name)
->>>>>>> 16ac31a1372d9ff862820ec6a4488a78feb5cf54
 
 @login_required
 @app.route('/menteeProfile', methods=["GET", "POST"])
