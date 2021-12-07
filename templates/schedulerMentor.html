@@ -15,10 +15,10 @@
         Choose Your Mentee
       </div>
       <div style="padding-bottom: 20px" class="card-body">
-        <select>
+        <select name="who">
           <option disabled selected value=""></option>
           {% for mymentee in mymentees %}
-              <option name="who" value="{{ mymentee[0] }}">{{ mymentee[0] }}</option>
+              <option value= "{{mymentee[0]}}">{{ mymentee[0] }}</option>
           {% endfor %}
         </select>    
       </div>

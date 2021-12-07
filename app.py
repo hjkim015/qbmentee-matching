@@ -251,15 +251,21 @@ def schedulerMentor():
     else:
         # Transfering data into table for meeting times
         link = request.form.get("link")
+        print("linkkkk,", link)
         date = request.form.get("date")
+        print("linkkkk,", date)
         time = request.form.get("time")
-        receiver = db.execute("SELECT id FROM users WHERE username = ?", (request.form.get("who"), ))
-        print("receiver-------------------", type(receiver))
+        print("linkkkk,", time)
+        receiver = db.execute("SELECT id FROM users WHERE username = ?", (request.form.get("who"), )).fetchall()
+        user_id = session["user_id"]
+        print("who",request.form.get("who") )
+        print("just receiver", receiver)
+        print("receiver-------------------", type(receiver[0][0]))
+        print("hellloooo", receiver[0][0])
         print("session_id-------------------", session["user_id"])
 
-        # print(type(link), type(date), type(time), type(receiver), type(session["user_id"]))
-        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", (session["user_id"], receiver, date, time, link))
-        redirect("/mentorDashboard")
+        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", (user_id, receiver[0][0], date, time, link))
+        return redirect("/mentorDashboard")
 
 
 @login_required
