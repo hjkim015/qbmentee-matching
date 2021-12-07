@@ -26,19 +26,14 @@
                 <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th scope="col">Scheduler</th>
-                        <th scope="col">Receiver</th>
+                        <th scope="col">Meeting With?</th>
                         <th scope="col">Date</th>
                         <th scope="col">Time</th>
                         <th scope="col">Link</th>
-                        <th scope="col">Delete?</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                    {% for sender in senders %}
-                        <td>{{sender}}</td>
-                    {% endfor %}
                     {% for receiver in receivers %}
                         <td>{{receiver}}</td>
                     {% endfor %}

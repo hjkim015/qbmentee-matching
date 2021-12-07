@@ -126,30 +126,25 @@
             <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">Scheduler</th>
                     <th scope="col">Receiver</th>
                     <th scope="col">Date</th>
                     <th scope="col">Time</th>
                     <th scope="col">Link</th>
-                    <th scope="col">Delete?</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                {% for sender in senders %}
-                    <td>{{sender}}</td>
-                {% endfor %}
                 {% for receiver in receivers %}
-                    <td>{{receiver}}</td>
+                    <td>{{receiver[0]}}</td>
                 {% endfor %}
                 {% for date in dates %}
-                    <td>{{date}}</td>
+                    <td>{{date[0]}}</td>
                 {% endfor %}
                 {% for time in times %}
-                    <td>{{time}}</td>
+                    <td>{{time[0]}}</td>
                 {% endfor %}
                 {% for link in links %}
-                    <td>{{link}}</td>
+                    <td>{{link[0]}}</td>
                 {% endfor %}
                   </tr>
                 </tbody>

@@ -202,15 +202,25 @@ def surveyMentor():
 def mentorDashboard():
     if request.method == "GET":
         # Information for the meetings table
-        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],)).fetchall()
-        senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],)).fetchall()
+        mentee_id = db.execute("SELECT mentee_id FROM matches WHERE mentor_id = ? ", (session["user_id"], )).fetchall()[0][0]
+        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (mentee_id,)).fetchall()
+        print("user_id", session["user_id"])
+        # senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],)).fetchall()
         dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], )).fetchall()
         times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
         links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
         mymentees = db.execute("SELECT username FROM users WHERE id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"], )).fetchall()
         email = db.execute("SELECT email FROM users WHERE id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"], )).fetchall()
         # Todo: add the bio! 
-        return render_template("mentorDashboard.html", email = email, receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mymentees=mymentees)
+
+        data.commit()
+        print("reiceiv", receivers)
+        print("dates", dates)
+        print("times", times)
+        print("links", links)
+        print("email", email)
+
+        return render_template("mentorDashboard.html", email = email, receivers=str(receivers), dates=str(dates), times=str(times), links=str(links), mymentees=mymentees)
 
 @login_required
 @app.route('/mentorProfile', methods=["GET", "POST"])
@@ -230,9 +240,13 @@ def menteeDashboard():
         # Information for the meetings table
         receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],)).fetchall()
         senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],)).fetchall()
+        print("Senders", senders)
         dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], )).fetchall()
         times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
         links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
+        print("times", times)
+        print("dates", dates)
+        print("links", links)
         return render_template("menteeDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mentor_name = mentor_name, mentor_email = mentor_email)
 
 @login_required
@@ -251,20 +265,16 @@ def schedulerMentor():
     else:
         # Transfering data into table for meeting times
         link = request.form.get("link")
-        print("linkkkk,", link)
+        # print("linkkkk,", link)
         date = request.form.get("date")
-        print("linkkkk,", date)
+        # print("linkkkk,", date)
         time = request.form.get("time")
-        print("linkkkk,", time)
+        # print("linkkkk,", time)
         receiver = db.execute("SELECT id FROM users WHERE username = ?", (request.form.get("who"), )).fetchall()
         user_id = session["user_id"]
-        print("who",request.form.get("who") )
-        print("just receiver", receiver)
-        print("receiver-------------------", type(receiver[0][0]))
-        print("hellloooo", receiver[0][0])
-        print("session_id-------------------", session["user_id"])
 
         db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", (user_id, receiver[0][0], date, time, link))
+        data.commit()
         return redirect("/mentorDashboard")
 
 
@@ -277,9 +287,15 @@ def schedulerMentee():
         link = request.form.get("link")
         date = request.form.get("date")
         time= request.form.get("time")
-        receiver = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ?", (session["user_id"]))
+        receiver = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ?", (session["user_id"], )).fetchall()[0][0]
+        print("receiver", type(receiver))
+        print("time", type(time))
+        print("date", type(date))
+        print("link", type(link))
+        print("sender", type(session["user_id"]))
         db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", (session["user_id"], receiver, date, time, link))
-        redirect("/menteeDashboard")
+        data.commit()
+        return redirect("/menteeDashboard")
 
 @login_required
 @app.route('/notes', methods=["GET", "POST"])
