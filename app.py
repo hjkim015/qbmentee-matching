@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3 
 import os
 import time
+import jinja2
 
 #Configure application 
 app = Flask(__name__)
@@ -15,6 +16,8 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+
 
 data = sqlite3.connect('qbspark.db', check_same_thread=False)
 db = data.cursor()
@@ -50,15 +53,17 @@ def login():
     else: 
         username = request.form.get("username")
         role = request.form.get("role")
-        rows = db.execute("SELECT * FROM users WHERE username = ?", (username,))
+        rows = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall()
         data.commit()
         # if not check_password_hash(rows[0][2], request.form.get("password")):
         #     return apology("invalid email and/or password")
         #Assign the session user id
-        session["user_id"] = rows.fetchall()[0][0]
+        session["user_id"] = rows[0][0]
         if role == "mentor":
+            session["role"] = "mentor"
             return redirect("/mentorDashboard")
         else: 
+            session["role"] = "mentee"
             return redirect("/menteeDashboard")
 
 @app.route('/logout')
@@ -112,18 +117,12 @@ def surveyMentee():
         term_two = request.form.get("term_two")
         term_three = request.form.get("term_three")
         term_four = request.form.get("term_four")
-        db.execute("INSERT INTO users (term_one, term_two, term_three, term_four) VALUES (?,?,?,?)", (term_one, term_two, term_three, term_four))
+        # db.execute("INSERT INTO users (term_one, term_two, term_three, term_four) VALUES (?,?,?,?) WHERE id = ?", (term_one, term_two, term_three, term_four, user_id))
         ##TODO Check that the terms and conditions are all agree statements. 
 
         #Store survey data about ethnic background
-        black = request.form.get("black")
-        asian = request.form.get("asian")
-        american_indian = request.form.get("native")
-        pacific_islander = request.form.get("pacific")
-        white = request.form.get("white")
-        latinx = request.form.get("latinx")
-        none_ethnicity = request.form.get("none_ethnicity")
-        db.execute("INSERT INTO ethnicity (person_id, black, asian, american_india, pacific_islander, white, latinx, none) VALUES (?,?,?,?,?,?,?,?)", (user_id, black, asian, american_indian, pacific_islander, white, latinx, none_ethnicity))
+        ethnicity = request.form.get("ethnicity")
+        db.execute("INSERT INTO ethnicity (person_id, ethnicity) VALUES (?,?)", (user_id, ethnicity))
 
         #Store survey data about religious background
         religion = request.form.get("religion")
@@ -167,18 +166,12 @@ def surveyMentor():
         term_three = request.form.get("term_three")
         term_four = request.form.get("term_four")
         term_five = request.form.get("term_five")
-        db.execute("INSERT INTO users (term_one, term_two, term_three, term_four, term_five) VALUES (?,?,?,?,?)", (term_one, term_two, term_three, term_four, term_five))
+        # db.execute("INSERT INTO users (term_one, term_two, term_three, term_four, term_five) VALUES (?,?,?,?,?) WHERE id = ?", (term_one, term_two, term_three, term_four, term_five, user_id))
         ##TODO Check that the terms and conditions are all agree statements. 
 
         #Store survey data about ethnic background
-        black = request.form.get("black")
-        asian = request.form.get("asian")
-        american_indian = request.form.get("native")
-        pacific_islander = request.form.get("pacific")
-        white = request.form.get("white")
-        latinx = request.form.get("latinx")
-        none_ethnicity = request.form.get("none_ethnicity")
-        db.execute("INSERT INTO ethnicity (person_id, black, asian, american_india, pacific_islander, white, latinx, none) VALUES (?,?,?,?,?,?,?,?)", (user_id, black, asian, american_indian, pacific_islander, white, latinx, none_ethnicity))
+        ethnicity = request.form.get("ethnicity")
+        db.execute("INSERT INTO ethnicity (person_id, ethnicity) VALUES (?,?)", (user_id, ethnicity))
 
         #Store survey data about religious background
         religion = request.form.get("religion")
@@ -214,7 +207,10 @@ def mentorDashboard():
         dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], )).fetchall()
         times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
         links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
-        return render_template("mentorDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links))
+        mymentees = db.execute("SELECT username FROM users WHERE id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"], )).fetchall()
+        email = db.execute("SELECT email FROM users WHERE id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"], )).fetchall()
+        # Todo: add the bio! 
+        return render_template("mentorDashboard.html", email = email, receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mymentees=mymentees)
 
 @login_required
 @app.route('/mentorProfile', methods=["GET", "POST"])
@@ -227,15 +223,17 @@ def mentorProfile():
 def menteeDashboard():
     if request.method == "GET":
         id = session["user_id"]
+        print("session role", session["role"])
         mentor_id = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,)).fetchall()
-        mentor_name = db.execute("SELECT username FROM users WHERE id = ?", mentor_id[0]).fetchall()
+        mentor_name = db.execute("SELECT username FROM users WHERE id = ?", mentor_id[0]).fetchall()[0][0]
+        mentor_email = db.execute("SELECT email FROM users WHERE id = ?", mentor_id[0]).fetchall()[0][0]
         # Information for the meetings table
         receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],)).fetchall()
         senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],)).fetchall()
         dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], )).fetchall()
         times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
         links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
-        return render_template("menteeDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mentor_name = mentor_name)
+        return render_template("menteeDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mentor_name = mentor_name, mentor_email = mentor_email)
 
 @login_required
 @app.route('/menteeProfile', methods=["GET", "POST"])
@@ -254,9 +252,13 @@ def schedulerMentor():
         # Transfering data into table for meeting times
         link = request.form.get("link")
         date = request.form.get("date")
-        time= request.form.get("time")
+        time = request.form.get("time")
         receiver = db.execute("SELECT id FROM users WHERE username = ?", (request.form.get("who"), ))
-        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", session["user_id"], (receiver, date, time, link))
+        print("receiver-------------------", type(receiver))
+        print("session_id-------------------", session["user_id"])
+
+        # print(type(link), type(date), type(time), type(receiver), type(session["user_id"]))
+        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", (session["user_id"], receiver, date, time, link))
         redirect("/mentorDashboard")
 
 
