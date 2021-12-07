@@ -61,35 +61,18 @@
     <br></br>
     <h3>Race/Ethnic Identity</h3>
     <p>Check off the race(s)/ethnicity/(ies) you identify with:</p>
-        <div class="mb-3">
-            <input type="checkbox" id="black" name="black" value = "1">
-            <label for="africanamerican">Black or African American</label>
-        </div>
-        <div class="mb-3">
-            <input type="checkbox" id="asian" name="asian" value = "1">
-            <label for="asian">Asian</label>
-        </div>
-        <div class="mb-3">
-            <input type="checkbox" id="native" name="native" value = "1">
-            <label for="native">American Indian/Alaskan Native/Native Indian</label>
-        </div>
-        <div class="mb-3">
-            <input type="checkbox" id="pacific" name="pacific" value = "1">
-            <label for="pacificislander">Pacific-Islander</label>
-        </div>
-        <div class="mb-3">
-            <input type="checkbox" id="white" name="white" value="1">
-            <label for="white">White/European</label>
-        </div>
-        <div class="mb-3">
-            <input type="checkbox" id="latinx" name="latinx" value="1">
-            <label for="latinx">Latinx</label>
-        </div>
-        <div class="mb-3">
-            <input type="checkbox" id="none_ethnicity" name="none_ethnicity" value="1">
-            <label for="none_ethnicity">None of the above/Prefer not to answer</label>
-        </div>
+    <select name="ethnicity" id="ethnicity">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="black">Black or African American</option>
+        <option value="asian">Asian</option>
+        <option value="native">American Indian/Alaskan Native/Native Indian</option>
+        <option value="pacificislander">Pacific-Islander</option>
+        <option value="white">White/European</option>
+        <option value="multi">Multi-racial</option>
+        <option value="none">None of the above/Prefer not to answer</option>
+    </select>
 
+    <br></br>
     <br></br>
     <h3>Religious Identity</h3>
     <p>Select the spirituality/(ies) that you identify with:</p>
@@ -151,11 +134,11 @@
             <label for="academicrank">Academic Interest: </label>
                 <select name="academicrank" id="academicrank">
                     <option disabled selected value> -- select an option -- </option>
-                    <option value="1">1: I need this in a mentor.</option>
-                    <option value="2">2: I really want this in a mentor.</option>
+                    <option value="5">1: I need this in a mentor.</option>
+                    <option value="4">2: I really want this in a mentor.</option>
                     <option value="3">3: I would like this in a mentor.</option>
-                    <option value="4">4: I might want this in a mentor.</option>
-                    <option value="5">5: I don't have a preference.</option>
+                    <option value="2">4: I might want this in a mentor.</option>
+                    <option value="1">5: I don't have a preference.</option>
                 </select>
         </div>
         <div class="mb-3">
@@ -170,8 +153,8 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="religiousrank">Religious Affiliation: </label>
-            <select name="religiousrank" id="religiousrank">
+            <label for="religionrank">Religious Affiliation: </label>
+            <select name="religionrank" id="religionrank">
                 <option disabled selected value> -- select an option -- </option>
                 <option value="5">1: I need this in a mentor.</option>
                 <option value="4">2: I really want this in a mentor.</option>
@@ -239,6 +222,13 @@
                 {% endfor %}
             </select>
         </div>
+
+    <br></br>
+    <h3>Write Your Bio</h3>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Anything you would like your mentor to know!</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
 
     <br></br>
     <button class="btn btn-primary" type="submit">Complete Registration</button>

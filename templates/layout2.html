@@ -21,7 +21,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <!-- Should lead to editing profile page-->
-                        <li><a class="dropdown-item" href="/editprofile">Edit Profile</a></li>
+                        <li><a class="dropdown-item" href="/editprofile">Profile</a></li>
                         <!-- Allows the user to log out-->
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>
@@ -37,46 +37,46 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             {% if session["role"] == "mentor" %}
-                            <a class="nav-link" href="/mentorDashboard">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            {% elif session["role"] == "mentee" %}
-                            <a class="nav-link" href="/menteeDashboard">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            {% endif %}
                             <div class="sb-sidenav-menu-heading">Interactions</div>
-                            {% if session["role"] == "mentor" %}
-                            <a class="nav-link" href="/schedulerMentor">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Scheduler
-                            </a>
-                            {% elif session["role"] == "mentee" %}
-                            <a class="nav-link" href="/schedulerMentee">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Scheduler
-                            </a>
-                            {% endif %}
-                            <a class="nav-link" href="/notes">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Notetaking
-                            </a>
-                            {% if session["role"] == "mentor" %}
-                            <a class="nav-link" href="/resourcesMentor">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Resources
-                            </a>
-                            {% elif session["role"] == "mentee" %}
-                            <a class="nav-link" href="/resourcesMentee">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Resources
-                            </a>
+                                <a class="nav-link" href="/mentorDashboard">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Dashboard
+                                </a>
+                                <a class="nav-link" href="/schedulerMentor">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Scheduler
+                                </a>
+                                <a class="nav-link" href="/notes">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Notetaking
+                                </a>
+                                <a class="nav-link" href="/resourcesMentor">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Resources
+                                </a>
+                            {% elif session["role"] == mentee %}
+                            <div class="sb-sidenav-menu-heading">Interactions</div>
+                                <a class="nav-link" href="/menteeDashboard">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Dashboard
+                                </a>
+                                <a class="nav-link" href="/schedulerMentee">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Scheduler
+                                </a>
+                                <a class="nav-link" href="/notes">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Notetaking
+                                </a>
+                                <a class="nav-link" href="/resourcesMentee">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Resources
+                                </a>
+                            {% else %}
+                                <p>Not a mentor or mentee</p>
                             {% endif %}
                 </nav>
             </div>
-
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">

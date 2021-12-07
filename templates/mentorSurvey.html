@@ -74,35 +74,18 @@
 <h3>Race/Ethnic Identity</h3>
 <!-- <form action="/mentorsurvey" method="post" required> -->
     <p>Check off the race(s)/ethnicity/(ies) you identify with:</p>
-    <div class="mb-3">
-        <input type="checkbox" id="black" name="black" value = "1">
-        <label for="africanamerican">Black or African American</label>
-    </div>
-    <div class="mb-3">
-        <input type="checkbox" id="asian" name="asian" value = "1">
-        <label for="asian">Asian</label>
-    </div>
-    <div class="mb-3">
-        <input type="checkbox" id="native" name="native" value = "1">
-        <label for="native">American Indian/Alaskan Native/Native Indian</label>
-    </div>
-    <div class="mb-3">
-        <input type="checkbox" id="pacific" name="pacific" value = "1">
-        <label for="pacificislander">Pacific-Islander</label>
-    </div>
-    <div class="mb-3">
-        <input type="checkbox" id="white" name="white" value="1">
-        <label for="white">White/European</label>
-    </div>
-    <div class="mb-3">
-        <input type="checkbox" id="latinx" name="latinx" value="1">
-        <label for="latinx">Latinx</label>
-    </div>
-    <div class="mb-3">
-        <input type="checkbox" id="none_ethnicity" name="none_ethnicity" value="1">
-        <label for="none_ethnicity">None of the above/Prefer not to answer</label>
-    </div>
+    <select name="ethnicity" id="ethnicity">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="black">Black or African American</option>
+        <option value="asian">Asian</option>
+        <option value="native">American Indian/Alaskan Native/Native Indian</option>
+        <option value="pacificislander">Pacific-Islander</option>
+        <option value="white">White/European</option>
+        <option value="multi">Multi-racial</option>
+        <option value="none">None of the above/Prefer not to answer</option>
+    </select>
 
+<br></br>
 <br></br>
 
 <h3>Religious Identity</h3>
