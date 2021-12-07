@@ -6,23 +6,41 @@
 
 {% block main %}
 
-<body style="background-color:rgb(252, 231, 193);">
-<form action="/schedulerMentee" method="post" required>
-  <label for="date">Select Meeting Date:</label>
-  <div style="height: 20px;"></div>
-    <input type="date" id="date" name="date">
-    <div style="height: 20px;"></div>
-  <label for="time">Select Meeting Time:</label>
-  <div style="height: 20px;"></div>
-  <input type="time" name="time">
-  <div style="height: 20px;"></div>
-  <label for="link">Insert meeting link:</label>
-  <div style="height: 20px;"></div>
-  <input type="url" name="link">
-  <div style="height: 20px;"></div>
-  <div>
-    <input type="submit">
+<body>
+<form action="/schedulerMent" method="post" required>  
+  <!--Choosing meeting date-->
+  <div class="card">
+    <div class="card-header">
+      Select Meeting Date
+    </div>
+    <div style="padding-bottom: 20px" class="card-body">
+      <input type="date" id="date" name="date">
+    </div>
   </div>
+  <h1 style="padding-bottom: 10px"></h1>
+
+  <div class="card">
+    <div class="card-header">
+      Select Meeting Time
+    </div>
+    <div style="padding-bottom: 20px" class="card-body">
+      <input type="time" name="time">
+    </div>
+  </div>
+  <h1 style="padding-bottom: 10px"></h1>
+
+  <div class="card">
+    <div class="card-header">
+      Insert Meeting Link
+    </div>
+    <div style="padding-bottom: 20px" class="card-body">
+      <input type="url" name="link">
+    </div>
+  </div>
+  <h1 style="padding-bottom: 10px"></h1>
+
+  <input type="submit" class="btn btn-primary"> </input>
+  
 </form>
 </body>
 {% endblock %}

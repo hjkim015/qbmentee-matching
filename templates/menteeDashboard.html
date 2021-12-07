@@ -5,17 +5,81 @@
 {% endblock %}
 
 {% block main %}
-<div class="card text-center">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="card">
     <div class="card-header">
       Your Mentor Match is
     </div>
-    <div class="card-body">
+    <div style="padding-bottom: 20px" class="card-body">
       <h5 class="card-title">{{mentor_name}}!</h5>
-      <p class="card-text">Contact your mentor at {{mentor_email}}</p>
+      <p  class="card-text">Contact your mentor at {{mentor_email}}.
+      </p>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mentor">
+        More info here
+     </button>
+  
+  <!-- More information about mentor-->
+ <div class="modal fade" id="mentor" tabindex="-1" role="dialog" aria-labelledby="mentorTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mentorTitle">About {{mentor_name}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <h4>{{mentor_name}}'s Note to you</h4>
+        <p>{{mentor_bio}}</p>
+        <h4>Quick Facts</h4>
+          <p>Email: {{mentor_email}}</p>    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
+    </div>
+  <!-- Contact mentor -->
+    <button type="button" class="btn btn-primary" style="background-color: #e7f0fd; color:black" data-toggle="modal" data-target="#exampleModal" data-whatever="christy@gmail.com">Contact</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Recipient:</label>
+                <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Send message</button>
+        </div>
+        </div>
+    </div>
+    </div>
+  </div>
+  </div>
   <br></br>
-  <br></br>
+
     <div class="row">
         <div class="col-xl-6">
             <div class="card mb-4">
