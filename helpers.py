@@ -34,18 +34,24 @@ def check_registration(rows, username, password, confirmation):
 
 def matching_algorithm(mentee_id):
     mentees = db.execute("SELECT id FROM users WHERE role = ?", (0, ))
+<<<<<<< HEAD
+=======
     mentors = db.execute("SELECT id FROM users WHERE role = ?", (1, ))
     
     # Count the number of mentors in the database
+>>>>>>> b78d7f16b33c299ac5e85e7318118183ff0665e8
     mentors = db.execute("SELECT id FROM users WHERE role = ?", (1, ))
     print(len(mentors.fetchall()))
     print("TEST")
 
     #Count the number of mentors in the database
+<<<<<<< HEAD
+=======
     cmentors = db.execute("SELECT * FROM users WHERE role = ?", (1, )).fetchall()
     print("TEST BEFORE", cmentors)
     mentor_count = int(len(cmentors))
     # print("mentor_count start", mentor_count)
+>>>>>>> b78d7f16b33c299ac5e85e7318118183ff0665e8
     cmentors = db.execute("SELECT * FROM users WHERE role = ?", (1, ))
     mentor_count = cmentors.rowcount
     status = 1
