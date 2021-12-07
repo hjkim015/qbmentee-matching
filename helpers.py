@@ -34,24 +34,18 @@ def check_registration(rows, username, password, confirmation):
 
 def matching_algorithm(mentee_id):
     mentees = db.execute("SELECT id FROM users WHERE role = ?", (0, ))
-<<<<<<< HEAD
-=======
     mentors = db.execute("SELECT id FROM users WHERE role = ?", (1, ))
     
     # Count the number of mentors in the database
->>>>>>> b78d7f16b33c299ac5e85e7318118183ff0665e8
     mentors = db.execute("SELECT id FROM users WHERE role = ?", (1, ))
     print(len(mentors.fetchall()))
     print("TEST")
 
     #Count the number of mentors in the database
-<<<<<<< HEAD
-=======
     cmentors = db.execute("SELECT * FROM users WHERE role = ?", (1, )).fetchall()
     print("TEST BEFORE", cmentors)
     mentor_count = int(len(cmentors))
     # print("mentor_count start", mentor_count)
->>>>>>> b78d7f16b33c299ac5e85e7318118183ff0665e8
     cmentors = db.execute("SELECT * FROM users WHERE role = ?", (1, ))
     mentor_count = cmentors.rowcount
     status = 1
@@ -64,7 +58,8 @@ def matching_algorithm(mentee_id):
     print("start", oldcompatibility[0], oldcompatibility[1], oldcompatibility[2])
 
     # Store mentee's category weights 
-    academics = db.execute("SELECT academics FROM rankings WHERE person_id = ?", (mentee_id, ))
+    academics = db.execute("SELECT academics FROM rankings WHERE person_id = ?", (mentee_id, )).fetchall()
+    print("academics is", academics)
     gender = db.execute("SELECT gender FROM rankings WHERE person_id = ?", (mentee_id, ))
     religion = db.execute("SELECT religion FROM rankings WHERE person_id = ?", (mentee_id, ))
     ethnicity = db.execute("SELECT ethnicity FROM rankings WHERE person_id = ?", (mentee_id, ))
@@ -135,7 +130,7 @@ def matching_algorithm(mentee_id):
        
         # Insert highest score and match information into database
         print("final thing to push to matches", oldcompatibility[0], oldcompatibility[1], oldcompatibility[2])
-        db.execute("INSERT INTO matches (score, mentee_id, mentor_id) VALUES (?,?,?)", (oldcompatibility[0], oldcompatibility[1], oldcompatibility[2], ))
+        db.execute("INSERT INTO matches (score, mentee_id, mentor_id) VALUES (?,?,?)", (oldcompatibility[0], oldcompatibility[1], oldcompatibility[2], ))    
         # Update the mentee count
         # current_count = db.execute("SELECT mentees_left FROM mentee_count WHERE person_id = ?", (oldcompatibility[2], ))
         # current_count = current_count.fetchall()[0] - 1
