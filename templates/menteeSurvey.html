@@ -14,7 +14,7 @@
             If these conditions of agreement are broken at any point, mentorship will be terminated immediately and external consequences will be taken if necessary. 
             If you do not agree to all of these conditions of agreement, you put your mentorship at possible risk of rejection. </p>
         <label for="term_one">Choose answer:</label>
-        <select name="term_one" id="term_one">
+        <select name="term_one" id="term_one" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">I agree to this condition.</option>
             <option value="0">I disagree to this condition.</option>
@@ -27,7 +27,7 @@
             all of my mentor's advice, I will respect the wisdom they offer and not attempt to argue with them unless 
             I believe they are presenting an offensive opinion. </p>
         <label for="term_two">Choose answer:</label>
-        <select name="term_two" id="term_two">
+        <select name="term_two" id="term_two" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">I agree to this condition.</option>
             <option value="0">I disagree to this condition.</option>
@@ -39,7 +39,7 @@
             refraining from engaging in any form of discriminatory conversation towards a certain demographic, 
             and refraining from beginning any form of romantic or sexual relationship with my mentor. </p>
         <label for="term_three">Choose answer:</label>
-        <select name="term_three" id="term_three">
+        <select name="term_three" id="term_three" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">I agree to this condition.</option>
             <option value="0">I disagree to this condition.</option>
@@ -51,7 +51,7 @@
             acknowledging the consequences of violating any condition and understanding that I am able to lose this mentorship 
             at any time, given I engage in any inappropriate behavior. </p>
         <label for="term_four">Choose answer:</label>
-        <select name="term_four" id="term_four">
+        <select name="term_four" id="term_four" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">I agree to this condition.</option>
             <option value="0">I disagree to this condition.</option>
@@ -61,7 +61,7 @@
     <br></br>
     <h3>Race/Ethnic Identity</h3>
     <p>Check off the race(s)/ethnicity/(ies) you identify with:</p>
-    <select name="ethnicity" id="ethnicity">
+    <select name="ethnicity" id="ethnicity" required>
         <option disabled selected value> -- select an option -- </option>
         <option value="black">Black or African American</option>
         <option value="asian">Asian</option>
@@ -76,7 +76,7 @@
     <br></br>
     <h3>Religious Identity</h3>
     <p>Select the spirituality/(ies) that you identify with:</p>
-        <select name="religion" id="religion">
+        <select name="religion" id="religion" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="muslim">Muslim</option>
             <option value="jewish">Jewish</option>
@@ -90,7 +90,7 @@
     <br></br>
     <h3>Gender Identity</h3>
     <p>Check off the gender(s) you identify with:</p>
-        <select name="gender" id="gender">
+        <select name="gender" id="gender" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="female">Female</option>
             <option value="male">Male</option>
@@ -104,7 +104,7 @@
     <br></br>
     <h3>Citizenship Status</h3>
     <p>Check off your citizenship status:</p>
-        <select name="citizenship" id="citizenship">
+        <select name="citizenship" id="citizenship" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="international">International Student studying in the U.S.</option>
             <option value="domestic">Domestic Undocumented Student</option>
@@ -116,7 +116,7 @@
     <br></br>
     <h3>Academic Pathway</h3>
     <p>What is your primary academic interest?</p>
-        <select name="academics" id="academics">
+        <select name="academics" id="academics" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="sciences">Life/Physical Sciences: Biology, Physics, Chemistry, Astronomy, etc.</option>
             <option value="engineering">Engineering: Chemical, Mechanical, Electrical, etc.</option>
@@ -132,7 +132,7 @@
     <p>Rank the importance of having a mentor that matches the following criteria: (on a scale of 1-5):</p>
         <div class="mb-3">
             <label for="academicrank">Academic Interest: </label>
-                <select name="academicrank" id="academicrank">
+                <select name="academicrank" id="academicrank" required>
                     <option disabled selected value> -- select an option -- </option>
                     <option value="5">1: I need this in a mentor.</option>
                     <option value="4">2: I really want this in a mentor.</option>
@@ -143,7 +143,7 @@
         </div>
         <div class="mb-3">
             <label for="genderrank">Gender Identity: </label>
-            <select name="genderrank" id="genderrank">
+            <select name="genderrank" id="genderrank" required>
                 <option disabled selected value> -- select an option -- </option>
                 <option value="5">1: I need this in a mentor.</option>
                 <option value="4">2: I really want this in a mentor.</option>
@@ -155,7 +155,7 @@
         <div class="mb-3">
             <label for="religionrank">Religious Affiliation: </label>
             <select name="religionrank" id="religionrank">
-                <option disabled selected value> -- select an option -- </option>
+                <option disabled selected value required> -- select an option -- </option>
                 <option value="5">1: I need this in a mentor.</option>
                 <option value="4">2: I really want this in a mentor.</option>
                 <option value="3">3: I would like this in a mentor.</option>
@@ -165,7 +165,7 @@
         </div>
         <div class="mb-3">
             <label for="racerank">Race/ Ethnic Identity: </label>
-            <select name="racerank" id="racerank">
+            <select name="racerank" id="racerank" required>
                 <option disabled selected value> -- select an option -- </option>
                 <option value="5">1: I need this in a mentor.</option>
                 <option value="4">2: I really want this in a mentor.</option>
@@ -176,7 +176,7 @@
         </div>
         <div class="mb-3">
             <label for="citizenshiprank">Citizenship Status: </label>
-            <select name="citizenshiprank" id="citizenshiprank">
+            <select name="citizenshiprank" id="citizenshiprank" required>
                 <option disabled selected value> -- select an option -- </option>
                 <option value="5">1: I need this in a mentor.</option>
                 <option value="4">2: I really want this in a mentor.</option>
@@ -191,7 +191,7 @@
     <p>Check off your timezone:</p>
         <div class="mb-3">
             <label for="timezome">Timezone</label>
-            <select name="timezone" id="timezone">
+            <select name="timezone" id="timezone" required>
                 <option disabled selected value> -- select an option -- </option>
                 <option value="pacific">Pacific</option>
                 <option value="central">Central</option>
@@ -226,8 +226,8 @@
     <br></br>
     <h3>Write Your Bio</h3>
     <div class="form-group">
-        <label for="exampleFormControlTextarea1">Anything you would like your mentor to know!</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <label for="bio">Anything you would like your mentor to know!</label>
+        <textarea class="form-control" name= "bio" id="bio" rows="3"></textarea>
       </div>
 
     <br></br>

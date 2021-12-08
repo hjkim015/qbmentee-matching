@@ -58,6 +58,8 @@ On the side bar, there is a tab labeled "scheduler." This feature was up to deba
 
 On the mentor's side, considering they have more potential people to schedule meetings with, we passed on the information from the "matches" table to variable that stores the mentees's names, and then we passed it onto the HTML using JINJA to display the mentee options to the mentor in the scheduler form. This way, the mentor can select who to schedule a meeting with and that mentee will then see that meeting on their own dashboard. The mentee's side is less complicated as each mentee only has one mentor and thus any meeting schedule will simply appear on their respective mentor's scheduled meetings table on their main dashboard as well as their own.
 
+To make them display in the correct user dashboards, the meets table keeps track of the pairs in the meetings, so that each user's meetings are selected from that table referencing the session user_id.
+
 # Notetaking
 
 This feature was directly pulled from an online source, but the purpose is to allow the users to keep track of notes taken about the mentorship, college process, future questions, etc.

@@ -54,9 +54,11 @@ def login():
         username = request.form.get("username")
         role = request.form.get("role")
         rows = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall()
+        check = db.execute("SELECT COUNT(username) FROM users WHERE username = ?", (username,)).fetchall()
         data.commit()
-        # if not check_password_hash(rows[0][2], request.form.get("password")):
-        #     return apology("invalid email and/or password")
+
+        if check[0][0] == 0:
+            return apology("incorrect username. username does not exist.")
         #Assign the session user id
         session["user_id"] = rows[0][0]
         if role == "mentor":
@@ -84,6 +86,9 @@ def register():
         password = request.form.get("password")
         email = request.form.get("email")
         discord = request.form.get("discord")
+
+        if password != confirmation:
+            return apology("Your password confirmation does not match your password. Try again.")
         
         #Check registration information then send to respective surveys 
         if role == "Mentor":
@@ -99,8 +104,8 @@ def register():
             rows = db.execute("SELECT * FROM users WHERE username = ?", (username,))
             # check_registration(rows, username, password, confirmation)
             db.execute("INSERT INTO users (username, password, email, discord, role) VALUES (?,?,?,?,?)", (username, generate_password_hash(password), email, discord, 0))
-            new = db.execute("SELECT * FROM users WHERE username = ?", (username,))
-            session["user_id"] = new.fetchall()[0][0]
+            new = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall()[0][0]
+            session["user_id"] = new
             session["role"] = "mentee"
             data.commit()
             return redirect("/menteeSurvey")
@@ -147,6 +152,13 @@ def surveyMentee():
         ethnicity_rank = request.form.get("racerank")
         citizenship_rank = request.form.get("citizenshiprank")
         db.execute("INSERT INTO rankings (person_id, academics, gender, religion, ethnicity, citzenship) VALUES (?,?,?,?,?,?)", (user_id, academic_rank, gender_rank, religion_rank, ethnicity_rank, citizenship_rank))
+        # Store bio information
+        bio = request.form.get("bio")
+        school1 = request.form.get("school1")
+        school2 = request.form.get("school2")
+        school3 = request.form.get("school3")
+        db.execute("UPDATE users SET bio = (?), school1 = ?, school2 = ?, school3 = ? WHERE person_id = ?", (bio, school1, school2, school3, user_id))
+
         data.commit()
 
         #Run the matching algorithm so that mentee gets a mentor
@@ -193,6 +205,12 @@ def surveyMentor():
         mentee_count = request.form.get("menteecount")
         db.execute("INSERT INTO mentee_count (person_id, mentee_count, mentees_left) VALUES (?,?,?)", (user_id, mentee_count, mentee_count))
         data.commit()
+
+        #Store bio information
+        current = request.form.get("current")
+        bio = request.form.get("bio")
+        db.execute("INSERT INTO users (bio, school1, school2, school3) VALUES (?,?,?,?)", (bio, current, "N/A", "N/A"))
+
         
         return redirect("/mentorDashboard")
         # return render_template("mentorDashboard.html")
@@ -202,25 +220,20 @@ def surveyMentor():
 def mentorDashboard():
     if request.method == "GET":
         # Information for the meetings table
-        mentee_id = db.execute("SELECT mentee_id FROM matches WHERE mentor_id = ? ", (session["user_id"], )).fetchall()[0][0]
-        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (mentee_id,)).fetchall()
-        print("user_id", session["user_id"])
-        # senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],)).fetchall()
-        dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], )).fetchall()
-        times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
-        links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
-        mymentees = db.execute("SELECT username FROM users WHERE id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"], )).fetchall()
+        # mentee_id = db.execute("SELECT mentee_id FROM matches WHERE mentor_id = ? ", (session["user_id"], )).fetchall()[0][0]
+        
+        meets = db.execute("SELECT * FROM meets WHERE sender = (SELECT username FROM users WHERE id = ?) OR receiver = (SELECT username FROM users WHERE id = ?)", (session["user_id"], session["user_id"], ) ). fetchall()
+        mymentees = db.execute("SELECT username, bio, school1, school2, school3, email  FROM users WHERE id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"], )).fetchall()
         email = db.execute("SELECT email FROM users WHERE id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"], )).fetchall()
+        bios = db.execute("SELECT school1 FROM users WHERE id IN (SELECT mentee_id FROM matches WHERE mentor_id = ?)", (session["user_id"], )).fetchall()
         # Todo: add the bio! 
 
         data.commit()
-        print("reiceiv", receivers)
-        print("dates", dates)
-        print("times", times)
-        print("links", links)
-        print("email", email)
+        # print("meets", meets)
+        # print("email", email)
+        print("bios,", mymentees)
 
-        return render_template("mentorDashboard.html", email = email, receivers=str(receivers), dates=str(dates), times=str(times), links=str(links), mymentees=mymentees)
+        return render_template("mentorDashboard.html", email = email, mymentees=mymentees, meets=meets, bios=bios)
 
 @login_required
 @app.route('/mentorProfile', methods=["GET", "POST"])
@@ -237,17 +250,11 @@ def menteeDashboard():
         mentor_id = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ? ", (id,)).fetchall()
         mentor_name = db.execute("SELECT username FROM users WHERE id = ?", mentor_id[0]).fetchall()[0][0]
         mentor_email = db.execute("SELECT email FROM users WHERE id = ?", mentor_id[0]).fetchall()[0][0]
+        mentor_bio = db.execute("SELECT bio FROM users WHERE id = ?", mentor_id[0]).fetchall()[0][0]
+        mentor_school = db.execute("SELECT school1 FROM users WHERE id = ?", mentor_id[0]).fetchall()[0][0]
         # Information for the meetings table
-        receivers = db.execute("SELECT username FROM users WHERE id IN (SELECT receiver_id FROM meets WHERE sender_id = ?)", (session["user_id"],)).fetchall()
-        senders = db.execute("SELECT username FROM users WHERE id IN (SELECT sender_id FROM meets WHERE receiver_id = ?)", (session["user_id"],)).fetchall()
-        print("Senders", senders)
-        dates = db.execute("SELECT date FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"], )).fetchall()
-        times = db.execute("SELECT time FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
-        links = db.execute("SELECT link FROM meets WHERE sender_id = ? OR receiver_id = ?", (session["user_id"],session["user_id"],)).fetchall()
-        print("times", times)
-        print("dates", dates)
-        print("links", links)
-        return render_template("menteeDashboard.html", receivers=str(receivers), senders=str(senders),dates=str(dates), times=str(times), links=str(links), mentor_name = mentor_name, mentor_email = mentor_email)
+        meets = db.execute("SELECT * FROM meets WHERE sender = (SELECT username FROM users WHERE id = ?) OR receiver = (SELECT username FROM users WHERE id = ?)", (session["user_id"], session["user_id"], ) ). fetchall()
+        return render_template("menteeDashboard.html", meets=meets, mentor_name = mentor_name, mentor_email = mentor_email, mentor_bio=mentor_bio, mentor_school=mentor_school)
 
 @login_required
 @app.route('/menteeProfile', methods=["GET", "POST"])
@@ -270,10 +277,10 @@ def schedulerMentor():
         # print("linkkkk,", date)
         time = request.form.get("time")
         # print("linkkkk,", time)
-        receiver = db.execute("SELECT id FROM users WHERE username = ?", (request.form.get("who"), )).fetchall()
-        user_id = session["user_id"]
+        receiver = request.form.get("who")
+        sender = db.execute("SELECT username FROM users WHERE id = ?", (session["user_id"], )).fetchall()
 
-        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", (user_id, receiver[0][0], date, time, link))
+        db.execute("INSERT INTO meets (sender, receiver, date, time, link) VALUES (?,?,?,?,?)", (sender[0][0], receiver, date, time, link))
         data.commit()
         return redirect("/mentorDashboard")
 
@@ -287,13 +294,9 @@ def schedulerMentee():
         link = request.form.get("link")
         date = request.form.get("date")
         time= request.form.get("time")
-        receiver = db.execute("SELECT mentor_id FROM matches WHERE mentee_id = ?", (session["user_id"], )).fetchall()[0][0]
-        print("receiver", type(receiver))
-        print("time", type(time))
-        print("date", type(date))
-        print("link", type(link))
-        print("sender", type(session["user_id"]))
-        db.execute("INSERT INTO meets (sender_id, receiver_id, date, time, link) VALUES (?,?,?,?,?)", (session["user_id"], receiver, date, time, link))
+        receiver = db.execute("SELECT username FROM users WHERE id = (SELECT mentor_id FROM matches WHERE mentee_id = ?)", (session["user_id"], )).fetchall()
+        sender = db.execute("SELECT username FROM users WHERE id = ?", (session["user_id"], )).fetchall()
+        db.execute("INSERT INTO meets (sender, receiver, date, time, link) VALUES (?,?,?,?,?)", (sender[0][0], receiver[0][0], date, time, link))
         data.commit()
         return redirect("/menteeDashboard")
 

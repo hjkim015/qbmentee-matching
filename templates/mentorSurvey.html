@@ -15,7 +15,7 @@
             respecting my mentee's right to privacy and autonomy on their social media platforms, and respecting my mentee's 
             right to cancel or reschedule any form of mentorship including virtual meetings, phone calls and virtual communication. </p>
         <label for="cars">Choose answer:</label>
-        <select name="term_one" id="term_one">
+        <select name="term_one" id="term_one" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">I agree to this condition.</option>
             <option value="0">I disagree to this condition.</option>
@@ -27,7 +27,7 @@
             suggested timeframe, come prepared to every meeting and I will respectfully provide my mentee with 
             positive constructive criticism. </p>
         <label for="cars">Choose answer:</label>
-        <select name="term_two" id="term_two">
+        <select name="term_two" id="term_two" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">I agree to this condition.</option>
             <option value="0">I disagree to this condition.</option>
@@ -39,7 +39,7 @@
             refraining from engaging in any form of discriminatory conversation towards a certain demographic, 
             and refraining from beginning any form of romantic or sexual relationship with my mentor. </p>
         <label for="cars">Choose answer:</label>
-        <select name="term_three" id="term_three">
+        <select name="term_three" id="term_three" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">I agree to this condition.</option>
             <option value="0">I disagree to this condition.</option>
@@ -51,7 +51,7 @@
             refraining from engaging in any form of discriminatory conversation towards a certain demographic, 
             and refraining from beginning any form of romantic or sexual relationship with my mentor. </p>
         <label for="cars">Choose answer:</label>
-        <select name="term_four" id="term_four">
+        <select name="term_four" id="term_four" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">I agree to this condition.</option>
             <option value="0">I disagree to this condition.</option>
@@ -63,7 +63,7 @@
             any condition and understanding that I am able to lose this mentorship at any time, given I engage in any inappropriate 
             behavior. </p>
         <label for="cars">Choose answer:</label>
-        <select name="term_five" id="term_five">
+        <select name="term_five" id="term_five" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">I agree to this condition.</option>
             <option value="0">I disagree to this condition.</option>
@@ -74,7 +74,7 @@
 <h3>Race/Ethnic Identity</h3>
 <!-- <form action="/mentorsurvey" method="post" required> -->
     <p>Check off the race(s)/ethnicity/(ies) you identify with:</p>
-    <select name="ethnicity" id="ethnicity">
+    <select name="ethnicity" id="ethnicity" required>
         <option disabled selected value> -- select an option -- </option>
         <option value="black">Black or African American</option>
         <option value="asian">Asian</option>
@@ -90,7 +90,7 @@
 
 <h3>Religious Identity</h3>
 <p>Select the spirituality/(ies) that you identify with:</p>
-    <select name="religion" id="religion">
+    <select name="religion" id="religion" required>
         <option disabled selected value> -- select an option -- </option>
         <option value="muslim">Muslim</option>
         <option value="jewish">Jewish</option>
@@ -104,7 +104,7 @@
 
 <h3>Gender Identity</h3>
     <p>Check off the gender(s) you identify with:</p>
-    <select name="gender" id="gender">
+    <select name="gender" id="gender" required>
         <option disabled selected value> -- select an option -- </option>
         <option value="female">Female</option>
         <option value="male">Male</option>
@@ -119,7 +119,7 @@
 
 <h3>Citizenship Status</h3>
     <p>Check off your citizenship status:</p>
-    <select name="citizenship" id="citizenship">
+    <select name="citizenship" id="citizenship" required>
         <option disabled selected value> -- select an option -- </option>
         <option value="international">International Student studying in the U.S.</option>
         <option value="domestic">Domestic Undocumented Student</option>
@@ -132,7 +132,7 @@
 
 <h3>Academic Pathway</h3>
 <p>What is your primary academic interest?</p>
-    <select name="academics" id="academics">
+    <select name="academics" id="academics" required>
         <option disabled selected value> -- select an option -- </option>
         <option value="sciences">Life/Physical Sciences: Biology, Physics, Chemistry, Astronomy, etc.</option>
         <option value="engineering">Engineering: Chemical, Mechanical, Electrical, etc.</option>
@@ -142,24 +142,6 @@
         <option value="undecided">Undecided/Prefer not to answer</option>
     </select>
     
-<!-- </form> -->
-<!-- <form action="/mentorsurvey" method="post">
-    <label for="currentschool">Your current school: </label>
-    <input name="currentschool" type="text">
-</form> -->
-
-<!-- <h3>QB Schools</h3>
-<form action="/mentorsurvey" method="post">
-    <div class="mb-3">
-        <p> Select all QB schools you've been accepted to: </p>
-        <select multiple name="school1">
-            <option disabled selected value=""></option>
-            {% for school in schools %}
-                <option value="{{ school }}">{{ school }}</option>
-            {% endfor %}
-        </select>
-    </div>
-</form> -->
 
 <br></br>
 <br></br>
@@ -168,7 +150,7 @@
     <div class="mb-3">
         <p> How many can you take on? (max 5): </p>
         <label for="menteecount">Number of Mentees: </label>
-        <select name="menteecount" id="menteecount">
+        <select name="menteecount" id="menteecount" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -177,6 +159,17 @@
             <option value="5">5</option>
         </select>
     </div>
+    <br></br>
+    <h3>Write Your Bio</h3>
+    <div class="form-group">
+        <label for="bio">Anything you would like your mentee to know!</label>
+        <textarea class="form-control" id="bio" name="bio" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="current">What school do you attend?</label>
+        <input type="text" name="current">
+      </div>
+    <br></br>
     <br></br>
     <button class="btn btn-primary" type="submit">Complete Registration</button>
 </form>

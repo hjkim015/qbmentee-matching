@@ -15,7 +15,7 @@
         Choose Your Mentee
       </div>
       <div style="padding-bottom: 20px" class="card-body">
-        <select name="who">
+        <select name="who" required>
           <option disabled selected value=""></option>
           {% for mymentee in mymentees %}
               <option value= "{{mymentee[0]}}">{{ mymentee[0] }}</option>
@@ -31,7 +31,7 @@
         Select Meeting Date
       </div>
       <div style="padding-bottom: 20px" class="card-body">
-        <input type="date" id="date" name="date">
+        <input type="date" id="date" name="date" required>
       </div>
     </div>
     <h1 style="padding-bottom: 10px"></h1>
@@ -41,7 +41,7 @@
         Select Meeting Time
       </div>
       <div style="padding-bottom: 20px" class="card-body">
-        <input type="time" name="time">
+        <input type="time" name="time" required>
       </div>
     </div>
     <h1 style="padding-bottom: 10px"></h1>
