@@ -157,7 +157,7 @@ def surveyMentee():
         school1 = request.form.get("school1")
         school2 = request.form.get("school2")
         school3 = request.form.get("school3")
-        db.execute("UPDATE users SET bio = (?), school1 = ?, school2 = ?, school3 = ? WHERE person_id = ?", (bio, school1, school2, school3, user_id))
+        db.execute("UPDATE users SET bio = (?), school1 = ?, school2 = ?, school3 = ? WHERE id = ?", (bio, school1, school2, school3, user_id))
 
         data.commit()
 
@@ -209,7 +209,7 @@ def surveyMentor():
         #Store bio information
         current = request.form.get("current")
         bio = request.form.get("bio")
-        db.execute("INSERT INTO users (bio, school1, school2, school3) VALUES (?,?,?,?)", (bio, current, "N/A", "N/A"))
+        db.execute("INSERT INTO users (bio, school1, school2, school3) VALUES (?,?,?,?) WHERE id = ?", (bio, current, "N/A", "N/A", user_id))
 
         
         return redirect("/mentorDashboard")
